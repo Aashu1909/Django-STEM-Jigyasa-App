@@ -1,11 +1,11 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path
 from django.conf import settings
-from django.conf.urls.static import static
+
 from .   import views
 urlpatterns = [
-     path('student_login/',views.student_login,name='studentLogin'),
-     path('',views.test,name='test'),
-     path('faculty_login/',views.faculty_login,name='facultyLogin'),
-     # path('sign_up/',views.sign_up,name='facultyLogin')
+     path('student_login/',views.student_login, name='studentLogin'),
+     path('faculty_login/',views.faculty_login, name='facultyLogin'),
+     path('signup_faculty/',views.Signupfaculty, name='facultySignup'),
+     path('signup_student/',views.Signupstudent, name='studentSignup'),
 ]

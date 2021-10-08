@@ -1,25 +1,24 @@
-{% extends 'JigyasaApp/base.html' %}
-{% load static %}
+{% extends 'JigyasaApp\base.html' %}
 {% block title %}
-Student Login
+{% load static %}
+Student Signup
 {% endblock title %}
-
 {% block css %}
 .link{
-	flex-direction:row;
+flex-direction:row;
 }
 {% endblock css %}
 
-
 {% block body %}
+<!-- SignUp Form -->
 <div class="limiter">
 	<div class="container-login100"
-		style="background-image:url({% static 'JigyasaApp\loginSignup\images\bg-01.jpg' %})">
+		style="background-image:url({% static 'JigyasaApp\loginSignup\images\bg-01.jpg' %});">
 		<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 			<form action="" method="POST" class="login100-form validate-form">
 				{% csrf_token %}
 				<span class="login100-form-title p-b-49">
-					Student Login
+					Student Sign-up
 				</span>
 
 				<div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
@@ -28,38 +27,60 @@ Student Login
 					<span class="focus-input100" data-symbol="&#xf206;"></span>
 				</div>
 
+				<div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+					<span class="label-input100">Student Enrollment ID:</span>
+					<input class="input100" type="text" name="username" placeholder="Enter enrollment number">
+					<span class="focus-input100" data-symbol="&#xf206;"></span>
+				</div>
+
+				<div class="form-group">
+					<label for="exampleFormControlSelect1">Branch:</label>
+					<select class="form-control" id="exampleFormControlSelect1">
+						<option>CSE</option>
+						<option>IT</option>
+						<option>ECE</option>
+						<option>EX</option>
+						<option>CME</option>
+						<option>CE</option>
+						<option>MECH</option>
+					</select>
+				</div>
+
 				<div class="wrap-input100 validate-input" data-validate="Password is required">
 					<span class="label-input100">Password</span>
 					<input class="input100" type="password" name="pass" placeholder="Type your password">
 					<span class="focus-input100" data-symbol="&#xf190;"></span>
 				</div>
-
-				<div class="text-right p-t-8 p-b-31">
-					<a href="#">
-						Forgot password?
-					</a>
+				<br>
+				<div class="wrap-input100 validate-input" data-validate="Password is required">
+					<span class="label-input100">Enter Password Again</span>
+					<input class="input100" type="password" name="pass" placeholder="Type your password again">
+					<span class="focus-input100" data-symbol="&#xf190;"></span>
 				</div>
 
+
+				<br>
+				<!-- Rainbow button for sign up -->
 				<div class="container-login100-form-btn">
 					<div class="wrap-login100-form-btn">
 						<div class="login100-form-bgbtn"></div>
 						<button class="login100-form-btn">
-
-							<a href="#">
-								LOGIN
+							<a
+								href="#">
+								Sign Up
 							</a>
 						</button>
 					</div>
 				</div>
-
+				<!-- Last login sign in buttons -->
 				<div class="flex-col-c p-t-50 m-l-12 link">
 					<div class="first">
 						<span class="txt1 p-b-17">
-							Create your new account
+							LogIn into your account
 						</span>
 						<button class="login100-form-btn">
-							<a href={% url 'studentSignup' %} class="txt2">
-								Sign Up
+							<a href={% url 'studentLogin' %} class="txt2">
+								Login
 							</a>
 						</button>
 					</div>
@@ -78,7 +99,4 @@ Student Login
 		</div>
 	</div>
 </div>
-
-
-<div id="dropDownSelect1"></div>
 {% endblock body %}
