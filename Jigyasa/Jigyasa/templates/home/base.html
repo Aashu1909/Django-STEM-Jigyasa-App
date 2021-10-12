@@ -39,7 +39,7 @@
 <body style="min-height:80vh;" >
    <header id="header" class="fixed-top ">
     <div class="container d-flex align-items-center justify-content-between">
-      <h1 class="logo"><a href="index.html">Jigyasa</a></h1>
+      <h1 class="logo"><a href={% url 'index' %}>Jigyasa</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -55,8 +55,9 @@
           <!-- <li><a href="blog.html">Blog</a></li> -->
           <li class="dropdown"><a href=""><span>LogIn/SignUp</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="/app/student_login">Student</a></li>
-              <li><a href="/app/faculty_login">Faculty</a></li>
+            
+              <li><a href={% url 'studentLoginPage' %}>Student</a></li>
+              <li><a href={% url 'facultyLoginPage' %}>Faculty</a></li>
             </ul>
           </li>
 
@@ -70,9 +71,8 @@
   {% endblock body %}
 
 
-
   <!-- Vendor JS Files -->
-  <script src={% static 'home\vendor\bootstrap\js\bootstrap.bundle.min.js' %}""></script>
+  <script src={% static "home\vendor\bootstrap\js\bootstrap.bundle.min.js" %}></script>
   <script src={% static "home\vendor\glightbox\js\glightbox.min.js" %}></script>
   <script src={% static "home\vendor\isotopelayout\isotope.pkgd.min.js" %}></script>
   <script src={% static "home\vendor\phpemailform\validate.js" %}></script>

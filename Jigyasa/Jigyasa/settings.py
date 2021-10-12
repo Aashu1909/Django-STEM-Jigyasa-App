@@ -74,11 +74,18 @@ WSGI_APPLICATION = 'Jigyasa.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+# setting for localhost.
+# Using mysql in this project.
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE':'django.db.backends.mysql',
+        'NAME':'jigyasa_student_management',
+        'USER':'student_management_system',
+        'PASSWORD':'student_management_password',
+        'HOST':'localhost',
+        'PORT':'3306'
     }
 }
 
@@ -124,10 +131,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Authorising our custom user models.
+AUTH_USER_MODEL="JigyasaApp.CustomUser"
 
+# Here we provide info about our custom authentication backend system.
+AUTHENTICTAION_BACKENDS=['JigyasaApp.EmailBackEnd.EmailBackEnd']
 # Managing Media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL='/media/'
