@@ -138,6 +138,7 @@ AUTH_USER_MODEL="JigyasaApp.CustomUser"
 
 # Here we provide info about our custom authentication backend system.
 AUTHENTICTAION_BACKENDS=['JigyasaApp.EmailBackEnd.EmailBackEnd']
+
 # Managing Media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL='/media/'

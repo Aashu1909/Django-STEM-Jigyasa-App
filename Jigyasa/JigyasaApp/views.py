@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth import login
+from JigyasaApp.customEmailAuthentication import EmailBackEnd
 # Create your views here.
 
 # For Faculty sign-up page
@@ -15,17 +17,15 @@ def student_login_page(request):
     return render(request,'JigyasaApp/student_login.html')
 # student login
 def student_login(request):
-    print("Student Login")
-    print(request)
-    if request.method=="POST":
-        email=request.POST.get('email','')
-        password=request.POST.get('password','')
-        print(email)
-        print(password)
+    if request.method!='POST':
+        return HttpResponse('Method not allowed')
     else:
-        print('method not allowed')    
-
-
+        user=EmailBackEnd.authenticate(request,username=request.POST.get('email'),password=request.POST.get('password'))
+        if user!=None:
+            login(user)
+            return HttpResponse("email:"+request.POST.get('email')+" " +"password:"+request.POST.get('password') )
+        else:
+            return HttpResponse('Invalid Login')
 # Function for faculty login page
 def faculty_login_page(request):
     return render(request,'JigyasaApp/faculty_login.html')
