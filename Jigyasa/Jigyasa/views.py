@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
-def index(request):
+def home_page(request):
     return render(request,'home/index.html')
 
 def contact(request):
