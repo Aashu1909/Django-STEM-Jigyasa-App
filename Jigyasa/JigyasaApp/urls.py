@@ -12,6 +12,9 @@ urlpatterns = [
      path('admin_user_logout/',views.admin_user_logout,name='adminLogout'),
      path('admin_home_page/',Admin_views.home,name='adminHome'),
      path('admin_add_faculty_page/',Admin_views.add_faculty, name='AdminAddFaculty'),
+     path('admin_add_faculty_save_page/',Admin_views.add_faculty_save, name='AdminSaveFaculty'),
+     path('admin_add_course_page/',Admin_views.add_course, name='AdminAddCourse'),
+     path('admin_add_course_save_page/',Admin_views.add_course_save, name='AdminSaveCourse'),
  
      path('student_login/',views.student_login,name='studentLogin'),
      path('student_login_page/',views.student_login_page, name='studentLoginPage'),
