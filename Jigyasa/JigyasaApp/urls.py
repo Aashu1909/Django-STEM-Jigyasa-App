@@ -8,28 +8,35 @@ urlpatterns = [
      path('admin_login/',views.admin_login,name='adminLogin'),
      path('admin_login_page/',views.admin_login_page,name='adminLoginPage'),
      path('admin_signup_page/',views.signup_admin_page,name='adminSignupPage'),
-     path('admin_user_details/',views.admin_user_details,name='adminDetails'),
-     path('admin_user_logout/',views.admin_user_logout,name='adminLogout'),
-     path('admin_home_page/',Admin_views.home,name='adminHome'),
+     path('admin_user_details/',views.admin_user_details,name='AdminDetails'),
+     path('admin_user_logout/',views.admin_user_logout,name='AdminLogout'),
+     path('admin_home_page/',Admin_views.home,name='AdminHome'),
      
      path('admin_add_faculty_page/',Admin_views.add_faculty, name='AdminAddFaculty'),
      path('admin_add_faculty_save_page/',Admin_views.add_faculty_save, name='AdminSaveFaculty'),
      path('admin_manage_faculty_page/', Admin_views.manage_faculty, name='AdminManageFaculty'),
-     path('admin_edit_faculty_page/', Admin_views.edit_faculty, name='AdminEditFaculty'),
+     path('admin_edit_faculty_page/<str:staff_id>/', Admin_views.edit_faculty, name='AdminEditFaculty'),
+     path('admin_edit_faculty_save_page', Admin_views.edit_faculty_save, name='AdminSaveEditFaculty'),
      
      path('admin_add_course_page/',Admin_views.add_course, name='AdminAddCourse'),
      path('admin_add_course_save_page/',Admin_views.add_course_save, name='AdminSaveCourse'),
      path('admin_manage_course_page/',Admin_views.manage_course, name='AdminManageCourse'),
+     path('admin_edit_course_page/<str:course_id>/',Admin_views.edit_course, name='AdminEditCourse'),
+     path('admin_edit_course_save_page/',Admin_views.edit_course_save, name='AdminSaveEditCourse'),
      
      path('admin_add_student_page/',Admin_views.add_student, name='AdminAddStudent'),
      path('admin_student_save_page/',Admin_views.add_student_save, name='AdminSaveStudent'),
      path('admin_manage_student_page/', Admin_views.manage_student, name='AdminManageStudent'),
+     path('admin_edit_student_page/<str:student_id>/', Admin_views.edit_student, name='AdminEditStudent'),
+     path('admin_edit_student_save_page', Admin_views.edit_student_save, name='AdminSaveEditStudent'),
 
      path('admin_add_subject_page/',Admin_views.add_subject, name='AdminAddSubject'),
      path('admin_add_subject_save_page/',Admin_views.add_subject_save, name='AdminSaveSubject'),
      path('admin_manage_subject_page/',Admin_views.manage_subject, name='AdminManageSubject'),
+     path('admin_edit_subject_page/<str:subject_id>/',Admin_views.edit_subject, name='AdminEditSubject'),
+     path('admin_edit_subject_save_page/',Admin_views.edit_subject_save, name='AdminSaveEditSubject'),
      
-     
+     path('check_user_availabilty/',views.check_user_availability, name='CheckUserAvailabilty'),    
 
      path('student_login/',views.student_login,name='studentLogin'),
      path('student_login_page/',views.student_login_page, name='studentLoginPage'),

@@ -1,16 +1,35 @@
 from django import http
+from django.http import response
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login, logout
+from .models import CustomUser
 from .custom_backend import EmailBackEnd
 from django.contrib import messages
-
+import json
 
 # Create your views here.
 
 # For Faculty sign-up page
 
+def check_user_availability(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        print('username:'+str(username))
+        all_users=CustomUser.objects.all()
+        username_list=[]
+        for user in all_users:
+            username_list.append(user.username)
+        
+        if username in username_list:
+            status={'status':'no'}
+            response=json.dumps(status)
+        else:
+            status={'status':'yes'}
+            response=json.dumps(status)
+        return HttpResponse(response)
+      
 def signup_faculty_page(request):
     return render(request, 'JigyasaApp/faculty_signup_page.html')
 

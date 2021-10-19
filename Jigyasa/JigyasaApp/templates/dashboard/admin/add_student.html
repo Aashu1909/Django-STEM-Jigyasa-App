@@ -46,7 +46,7 @@ Add Student
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action={% url 'AdminSaveStudent' %} method="post">
+                    <form action={% url 'AdminSaveStudent' %} method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="card-body">
                             <div class="form-row">
@@ -107,6 +107,11 @@ Add Student
                                 <label for="username">Username:</label>
                                 <input type="text" class="form-control" id="username" name="username"
                                     placeholder="Enter your username">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile_pic">Profile Pic:</label>
+                                <input type="file" class="form-control" id="profile_pic" name="profile_pic"
+                                >
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
