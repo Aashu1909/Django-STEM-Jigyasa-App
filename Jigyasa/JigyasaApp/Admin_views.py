@@ -5,13 +5,14 @@ from django.http import HttpResponse
 from .models import CustomUser, Staffs, Courses, Students, Subjects
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
+from .forms import AddStudentForms  
 
 def home(request):
     return render(request, 'dashboard/admin/home_content.html')
 
 # Staffs
 def add_faculty(request):
-    return render(request, 'dashboard/admin/add_faculty.html')
+    return render(request, 'dashboard/admin/add_templates/add_faculty.html')
 
 def add_faculty_save(request):
     if request.method != "POST":
@@ -33,7 +34,7 @@ def add_faculty_save(request):
                 user.staffs.address = address
                 user.save()
                 messages.success(request, "Successfully Added Staff")
-                return HttpResponseRedirect("/app/admin_add_faculty_page")
+                return HttpResponseRedirect("/app/admin_add_faculty_page")#urls path inside Http responmse not 
             except:
                 messages.error(request, "Failed to Add Staff")
                 return HttpResponseRedirect("/app/admin_add_faculty_page")
@@ -43,12 +44,12 @@ def add_faculty_save(request):
 
 def manage_faculty(request):
     staffs = Staffs.objects.all()
-    return render(request, 'dashboard/admin/manage_faculty.html', {'staffs': staffs})
+    return render(request, 'dashboard/admin/manage_templates/manage_faculty.html', {'staffs': staffs})
 
 def edit_faculty(request, staff_id):
 
     staff_user = Staffs.objects.get(admin=staff_id)
-    return render(request, 'dashboard/admin/edit_faculty.html', {'staff': staff_user})
+    return render(request, 'dashboard/admin/edit_templates/edit_faculty.html', {'staff': staff_user,'id':staff_id})
 
 def edit_faculty_save(request):
     if request.method != "POST":
@@ -80,7 +81,10 @@ def edit_faculty_save(request):
 # Students
 def add_student(request):
     courses = Courses.objects.all()
-    return render(request, 'dashboard/admin/add_student.html', {'courses': courses})
+    form=AddStudentForms()
+    dict= {'courses': courses,'form':form }
+    return render(request, 'dashboard/admin/add_templates/add_student.html',dict)
+
 
 def add_student_save(request):
     if request.method != "POST":
@@ -125,14 +129,15 @@ def add_student_save(request):
             messages.error(request, "Passwords Not Matched!!")
             return HttpResponseRedirect('/app/admin_add_student_page')
 
+
 def manage_student(request):
     students = Students.objects.all()
-    return render(request, 'dashboard/admin/manage_student.html', {'students': students})
+    return render(request, 'dashboard/admin/manage_templates/manage_student.html', {'students': students})
 
 def edit_student(request, student_id):
     curr_student_object = Students.objects.get(admin=student_id)
     courses = Courses.objects.all()
-    return render(request, 'dashboard/admin/edit_student.html', {'student': curr_student_object, 'courses': courses})
+    return render(request, 'dashboard/admin/edit_templates/edit_student.html', {'student': curr_student_object,'id':student_id, 'courses': courses})
 
 def edit_student_save(request):
     if request.method != "POST":
@@ -191,7 +196,7 @@ def edit_student_save(request):
 
 # Courses 
 def add_course(request):
-    return render(request, 'dashboard/admin/add_course.html')
+    return render(request, 'dashboard/admin/add_templates/add_course.html')
 
 def add_course_save(request):
     if request.method != "POST":
@@ -210,11 +215,11 @@ def add_course_save(request):
 
 def manage_course(request):
     courses = Courses.objects.all()
-    return render(request, 'dashboard/admin/manage_course.html', {'courses': courses})
+    return render(request, 'dashboard/admin/manage_templates/manage_course.html', {'courses': courses})
 
 def edit_course(request, course_id):
     course=Courses.objects.get(id=course_id)
-    return render(request,'dashboard/admin/edit_course.html',{'course':course})
+    return render(request,'dashboard/admin/edit_templates/edit_course.html',{'course':course,'id':course_id})
 
 def edit_course_save(request):
     if request.method != "POST":
@@ -239,7 +244,7 @@ def edit_course_save(request):
 def add_subject(request):
     courses = Courses.objects.all()
     staffs = CustomUser.objects.filter(user_type=2)
-    return render(request, 'dashboard/admin/add_subject.html', {'courses': courses, 'staffs': staffs})
+    return render(request, 'dashboard/admin/add_templates/add_subject.html', {'courses': courses, 'staffs': staffs})
 
 def add_subject_save(request):
     if request.method != "POST":
@@ -264,14 +269,14 @@ def add_subject_save(request):
 
 def manage_subject(request):
     subjects = Subjects.objects.all()
-    return render(request, 'dashboard/admin/manage_subject.html', {'subjects': subjects})
+    return render(request, 'dashboard/admin/manage_templates/manage_subject.html', {'subjects': subjects})
 
 def edit_subject(request, subject_id):
     subject=Subjects.objects.get(id=subject_id)
     course=Courses.objects.all()
     staff=CustomUser.objects.filter(user_type=2)
-    dict={'subject':subject,'courses':course,'staffs':staff}
-    return render(request,'dashboard/admin/edit_subject.html',dict)
+    dict={'subject':subject,'courses':course,'staffs':staff,'id':subject_id}
+    return render(request,'dashboard/admin/edit_templates/edit_subject.html',dict)
 
 def edit_subject_save(request):
     if request.method != "POST":

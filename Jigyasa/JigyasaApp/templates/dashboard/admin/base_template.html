@@ -11,8 +11,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href={% static 'dashboard/plugins/fontawesome-free/css/all.min.css' %}>
   <!-- Ionicons -->
-  <link rel="stylesheet"
-    href={% static 'dashboard/ionicframework.css' %}>
+  
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet"
     href={% static 'dashboard/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}>
@@ -178,7 +177,7 @@
 
 
     <!-- Main Sidebar Container -->
-    {% include 'dashboard/admin/sidebar_template.html' with user=user id=id  %}
+    {% include 'dashboard/admin/sidebar_template.html' with user=user id=id   %}
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

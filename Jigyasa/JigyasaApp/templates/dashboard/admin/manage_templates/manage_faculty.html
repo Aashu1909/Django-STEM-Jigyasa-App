@@ -1,0 +1,72 @@
+{% extends 'dashboard/admin/base_template.html'%}
+{% load static %}
+
+{% block title %}
+Manage Staff
+{% endblock title%}
+
+{% block main_title %}
+Manage Staff
+{% endblock main_title%}
+
+{% block side_title %}
+Manage Staff
+{% endblock side_title%}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <!-- Main column -->
+        <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Manage Your Staff Here</h3>
+
+              <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover text-nowrap">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Firstname</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Last Login</th>
+                    <th>Date Joined</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for staff in staffs %}
+                    <tr>
+                    <td> {{staff.admin.id}} </td>
+                    <td> {{staff.admin.username}} </td>
+                    <td>{{staff.admin.first_name}}</td>
+                    <td>{{staff.admin.last_name}}</td>
+                    <td><span class="tag tag-success">{{staff.admin.email}}</span></td>
+                    <td>{{staff.address}}</td>
+                    <td>{{staff.admin.last_login}}</td>
+                    <td>{{staff.admin.date_joined}}</td>
+                    <td><a href="/app/admin_edit_faculty_page/{{staff.admin.id}}/" class="btn btn-dark">Edit</a></td>
+                  </tr>
+                {% endfor %}
+                  
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock main_content %}

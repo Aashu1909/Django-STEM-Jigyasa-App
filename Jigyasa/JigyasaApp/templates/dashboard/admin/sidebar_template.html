@@ -1,151 +1,152 @@
 {% load static %}
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="{% url 'AdminHome' %}" class="brand-link">
-      <img src={% static 'dashboard/dist/img/AdminLTELogo.png' %} alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
-    </a>
+  <!-- Brand Logo -->
+  <a href="{% url 'AdminHome' %}" class="brand-link">
+    <img src={% static 'dashboard/dist/img/AdminLTELogo.png' %} alt="AdminLTE Logo"
+      class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">AdminLTE 3</span>
+  </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src={% static 'dashboard/dist/img/user2-160x160.jpg' %} class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{user.username}} </a>
-        </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src={% static 'dashboard/dist/img/user2-160x160.jpg' %} class="img-circle elevation-2" alt="User Image">
       </div>
+      <div class="info">
+        <a href="#" class="d-block">{{user.username}} </a>
+      </div>
+    </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-          </li>
 
-          <li class="nav-item">
-            <a href={% url 'AdminAddFaculty' %} class="nav-link">
-              <i class="fas mr-2 fa-user-plus"></i>
-              <p>
-                Add Staff
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'AdminManageFaculty' %}" class="nav-link">
-              <i class="fas mr-2 fa-user-circle"></i>
-              <p>
-                Manage Staff
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href={% url 'AdminAddStudent' %} class="nav-link">
-              <i class="fas mr-2 fa-user-plus"></i>
-              <p>
-                Add Student
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'AdminManageStudent' %}" class="nav-link">
-              <i class="fas mr-2 fa-user-graduate"></i>
-              <p>
-                Manage Stduent
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'AdminAddCourse' %}" class="nav-link">
-              <i class="fas mr-2 fa-book"></i>
-              <p>
-                Add Course
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'AdminManageCourse' %}" class="nav-link">
-              <i class="fas mr-2 fa-book-open"></i>
-              <p>
-                Manage Course
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'AdminAddSubject' %}" class="nav-link">
-              <i class="fas mr-2 fa-book-reader"></i>
-              <p>
-                Add Subject
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'AdminManageSubject' %}" class="nav-link">
-              <i class="fas mr-2 fa-book-reader"></i>              <p>
-                Manage Subject
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="fas mr-2 fa-clipboard-check"></i>
-              <p>
-                View Attendence
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="fas mr-2 fa-comment-alt"></i>
-              <p>
-                Staff Feedback
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="fas mr-2 fa-file-alt"></i>
-              <p>
-                Student Leave
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="fas mr-2 fa-file-alt"></i>
-              <p>
-                Staff Leave
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          
-          
-          
-          
-          <!-- <li class="nav-item has-treeview">
+        {% url 'AdminAddFaculty' as AdminAddFaculty %}
+        <li class="nav-item">
+          <a href={{AdminAddFaculty}} class="nav-link {% if request.path == AdminAddFaculty %}active {% endif %}  ">
+            <i class="fas mr-2 fa-user-plus"></i>
+            <p>
+              Add Staff
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        {% url 'AdminManageFaculty' as AdminManageFaculty %}
+        {% url 'AdminEditFaculty' staff_id=id as AdminEditFaculty %}
+        <li class="nav-item">
+          <a href="{{AdminManageFaculty}}"
+            class="nav-link  {% if request.path == AdminManageFaculty %}active {% endif %} {% if request.path == AdminEditFaculty %}active {% endif %}">
+            <i class="fas mr-2 fa-user-circle"></i>
+            <p>
+              Manage Staff
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        {% url 'AdminAddStudent' as AdminAddStudent %}
+        <li class="nav-item">
+          <a href={{AdminAddStudent}} class="nav-link {% if request.path == AdminAddStudent %}active {% endif %}">
+            <i class="fas mr-2 fa-user-plus"></i>
+            <p>
+              Add Student
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        {% url 'AdminManageStudent' as AdminManageStudent %}
+        {% url 'AdminEditStudent' student_id=id as AdminEditStudent %}
+        <li class="nav-item">
+          <a href=" {{AdminManageStudent}} " class="nav-link {% if request.path == AdminManageStudent %}active {% endif %}{% if request.path == AdminEditStudent %}active {% endif %}">
+            <i class="fas mr-2 fa-user-graduate"></i>
+            <p>
+              Manage Stduent
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        {% url 'AdminAddCourse' as AdminAddCourse %}
+        <li class="nav-item">
+          <a href=" {{AdminAddCourse}} " class="nav-link {% if request.path == AdminAddCourse %}active {% endif %}">
+            <i class="fas mr-2 fa-book"></i>
+            <p>
+              Add Course
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        {% url 'AdminManageCourse' as AdminManageCourse %}
+        {% url 'AdminEditCourse' course_id=id as AdminEditCourse %}
+        <li class="nav-item">
+          <a href="{% url 'AdminManageCourse' %}" class="nav-link {% if request.path == AdminManageCourse %}active {% endif %}  {% if request.path == AdminEditCourse %}active {% endif %}">
+            <i class="fas mr-2 fa-book-open"></i>
+            <p>
+              Manage Course
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        {% url 'AdminAddSubject' as AdminAddSubject %}
+        <li class="nav-item">
+          <a href=" {{AdminAddSubject}} " class="nav-link {% if request.path == AdminAddSubject %}active {% endif %}">
+            <i class="fas mr-2 fa-book-reader"></i>
+            <p>
+              Add Subject
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        {% url 'AdminManageSubject' as AdminManageSubject %}
+        {% url 'AdminEditSubject' subject_id=id as AdminEditSubject %}
+        <li class="nav-item">
+          <a href="{{AdminManageSubject}}" class="nav-link {% if request.path == AdminManageSubject %}active {% endif %} {% if request.path == AdminEditSubject %}active {% endif %}">
+            <i class="fas mr-2 fa-book-reader"></i>
+            <p>
+              Manage Subject
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="pages/widgets.html" class="nav-link">
+            <i class="fas mr-2 fa-clipboard-check"></i>
+            <p>
+              View Attendence
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="pages/widgets.html" class="nav-link">
+            <i class="fas mr-2 fa-comment-alt"></i>
+            <p>
+              Staff Feedback
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="pages/widgets.html" class="nav-link">
+            <i class="fas mr-2 fa-file-alt"></i>
+            <p>
+              Student Leave
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="pages/widgets.html" class="nav-link">
+            <i class="fas mr-2 fa-file-alt"></i>
+            <p>
+              Staff Leave
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
@@ -631,9 +632,9 @@
               <p>Informational</p>
             </a>
           </li> -->
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

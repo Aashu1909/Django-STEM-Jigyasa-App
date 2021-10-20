@@ -11,25 +11,25 @@ urlpatterns = [
      path('admin_user_details/',views.admin_user_details,name='AdminDetails'),
      path('admin_user_logout/',views.admin_user_logout,name='AdminLogout'),
      path('admin_home_page/',Admin_views.home,name='AdminHome'),
-     
+     # Admin Faculty paths
      path('admin_add_faculty_page/',Admin_views.add_faculty, name='AdminAddFaculty'),
      path('admin_add_faculty_save_page/',Admin_views.add_faculty_save, name='AdminSaveFaculty'),
      path('admin_manage_faculty_page/', Admin_views.manage_faculty, name='AdminManageFaculty'),
      path('admin_edit_faculty_page/<str:staff_id>/', Admin_views.edit_faculty, name='AdminEditFaculty'),
      path('admin_edit_faculty_save_page', Admin_views.edit_faculty_save, name='AdminSaveEditFaculty'),
-     
+     # Admin course Path
      path('admin_add_course_page/',Admin_views.add_course, name='AdminAddCourse'),
      path('admin_add_course_save_page/',Admin_views.add_course_save, name='AdminSaveCourse'),
      path('admin_manage_course_page/',Admin_views.manage_course, name='AdminManageCourse'),
      path('admin_edit_course_page/<str:course_id>/',Admin_views.edit_course, name='AdminEditCourse'),
      path('admin_edit_course_save_page/',Admin_views.edit_course_save, name='AdminSaveEditCourse'),
-     
+     # admin Student Path
      path('admin_add_student_page/',Admin_views.add_student, name='AdminAddStudent'),
      path('admin_student_save_page/',Admin_views.add_student_save, name='AdminSaveStudent'),
      path('admin_manage_student_page/', Admin_views.manage_student, name='AdminManageStudent'),
      path('admin_edit_student_page/<str:student_id>/', Admin_views.edit_student, name='AdminEditStudent'),
      path('admin_edit_student_save_page', Admin_views.edit_student_save, name='AdminSaveEditStudent'),
-
+     # Admin Subject Path
      path('admin_add_subject_page/',Admin_views.add_subject, name='AdminAddSubject'),
      path('admin_add_subject_save_page/',Admin_views.add_subject_save, name='AdminSaveSubject'),
      path('admin_manage_subject_page/',Admin_views.manage_subject, name='AdminManageSubject'),

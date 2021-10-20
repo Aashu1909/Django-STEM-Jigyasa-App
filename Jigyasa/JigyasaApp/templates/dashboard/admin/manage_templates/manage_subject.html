@@ -1,0 +1,64 @@
+{% extends 'dashboard/admin/base_template.html'%}
+{% load static %}
+
+{% block title %}
+Manage Subject
+{% endblock title%}
+
+{% block main_title %}
+Manage Subject
+{% endblock main_title%}
+
+{% block side_title %}
+Manage Subject
+{% endblock side_title%}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <!-- Main column -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Manage Your Subjects Here</h3>
+
+                <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Subject ID</th>
+                            <th>Subject Name</th>
+                            <th>Course</th>
+                            <th>Faculty Name</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subject in subjects %}
+                        <tr>
+                            <td>{{subject.id}}</td>
+                            <td>{{subject.subject_name}}</td>
+                            <td>{{subject.course_id.course_name}}</td>
+                            <td>{{subject.staff_id.first_name}} {{subject.staff_id.last_name}}</td>                           
+                            <td><a href="/app/admin_edit_subject_page/{{subject.id}}/" class="btn btn-dark">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock main_content %}
