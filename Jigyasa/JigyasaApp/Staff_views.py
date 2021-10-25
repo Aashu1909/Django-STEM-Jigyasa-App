@@ -3,7 +3,7 @@ from django.shortcuts import render
 from .models import SessionYearModel, Subjects, Students, Attendance,AttendanceReport
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .object_serializer import Object
+
 
 def faculty_home(request):
     return render(request, 'dashboard/staff_templates/home_content.html')
