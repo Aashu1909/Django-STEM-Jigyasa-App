@@ -6,7 +6,7 @@ Student Login
 
 {% block css %}
 .link{
-	flex-direction:row;
+flex-direction:row;
 }
 {% endblock css %}
 
@@ -16,7 +16,19 @@ Student Login
 	<div class="container-login100"
 		style="background-image:url({% static 'JigyasaApp\loginSignup\images\bg-01.jpg' %})">
 		<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-			<form action="/app/student_login/" method="POST" class="login100-form validate-form">
+			{% if messages %}
+			{% for message in messages  %}
+			{% if message.tags == 'error' %}
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Error!!!</strong> {{message}}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{% endif %}
+			{% endfor %}
+			{% endif %}
+			<form action="{% url 'StudentLogin' %}" method="POST" class="login100-form validate-form">
 				{% csrf_token %}
 				<span class="login100-form-title p-b-49">
 					Student Login
@@ -55,7 +67,7 @@ Student Login
 							Create your new account
 						</span>
 						<button class="login100-form-btn">
-							<a href={% url 'studentSignupPage' %} class="txt2">
+							<a href={% url 'StudentSignupPage' %} class="txt2">
 								Sign Up
 							</a>
 						</button>

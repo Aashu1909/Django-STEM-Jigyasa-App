@@ -110,42 +110,19 @@
             </p>
           </a>
         </li>
+
+        
+        {% url 'AdminManageSession' as AdminManageSession %}
         <li class="nav-item">
-          <a href="pages/widgets.html" class="nav-link">
-            <i class="fas mr-2 fa-clipboard-check"></i>
+          <a href="{{AdminManageSession}}" class="nav-link {% if request.path == AdminManageSession %}active {% endif %}">
+            <i class="fas mr-2 fa-book-reader"></i>
             <p>
-              View Attendence
+              Manage Session Year
               <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="pages/widgets.html" class="nav-link">
-            <i class="fas mr-2 fa-comment-alt"></i>
-            <p>
-              Staff Feedback
-              <span class="right badge badge-danger">New</span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/widgets.html" class="nav-link">
-            <i class="fas mr-2 fa-file-alt"></i>
-            <p>
-              Student Leave
-              <span class="right badge badge-danger">New</span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/widgets.html" class="nav-link">
-            <i class="fas mr-2 fa-file-alt"></i>
-            <p>
-              Staff Leave
-              <span class="right badge badge-danger">New</span>
-            </p>
-          </a>
-        </li>
+        
         <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>

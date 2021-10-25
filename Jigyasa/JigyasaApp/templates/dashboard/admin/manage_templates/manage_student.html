@@ -60,8 +60,8 @@ Manage Student
               <td style="text-align: center;vertical-align: middle;">{{student.admin.last_name}}</td>
               <td style="text-align: center;vertical-align: middle;">{{student.gender}}</td>
               <td style="text-align: center;vertical-align: middle;">{{student.course_id.course_name}}</td>
-              <td style="text-align: center;vertical-align: middle;">{{student.session_start_year}}</td>
-              <td style="text-align: center;vertical-align: middle;">{{student.session_end_year}}</td>
+              <td style="text-align: center;vertical-align: middle;">{{student.session_year_id.session_start_year}}</td>
+              <td style="text-align: center;vertical-align: middle;">{{student.session_year_id.session_end_year}}</td>
               <td><img style="
                       width: 100%;
                       border-radius: 50%;
@@ -70,7 +70,7 @@ Manage Student
               <td style="text-align: center;vertical-align: middle;">{{student.admin.last_login}}</td>
               <td style="text-align: center;vertical-align: middle;">{{student.admin.date_joined}}</td>
               <td style="text-align: center;vertical-align: middle;"><a
-                  href='/app/admin_edit_student_page/{{student.admin.id}}/' class="btn btn-dark">Edit</a></td>
+                  href="{% url 'AdminEditStudent' student_id=student.admin.id %}" class="btn btn-dark">Edit</a></td>
             </tr>
             {% endfor %}
 

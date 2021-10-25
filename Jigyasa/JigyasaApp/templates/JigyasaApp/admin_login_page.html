@@ -29,7 +29,7 @@ Admin Login
 				{% endif %}
 				{% endfor %}
 				{% endif %}
-			<form action="/app/admin_login/" method="POST" class="login100-form validate-form">
+			<form action="{% url 'AdminLogin' %}" method="POST" class="login100-form validate-form">
 				{% csrf_token %}
 				<span class="login100-form-title p-b-49">
 					Admin Login

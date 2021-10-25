@@ -49,8 +49,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'JigyasaApp.LoginMiddleWare.LoginCheckMiddleWare'
 
+]
+#
 ROOT_URLCONF = 'Jigyasa.urls'
 
 TEMPLATES = [
@@ -81,6 +83,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE':'django.db.backends.mysql',
+        # Database name should be Given
         'NAME':'jigyasa_student_management',
         'USER':'student_management_system',
         'PASSWORD':'student_management_password',

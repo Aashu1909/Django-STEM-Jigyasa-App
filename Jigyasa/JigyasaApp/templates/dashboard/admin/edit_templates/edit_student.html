@@ -6,7 +6,7 @@ Admin Edit Student
 {% endblock title%}
 
 {% block main_title %}
-Edit Student | Username: {{student.admin.username}} | ID:{{student.admin.id}}
+Edit Student | Username: {{username}} | ID:{{id}}
 {% endblock main_title%}
 {% block main_content %}
 <section class="content">
@@ -42,114 +42,9 @@ Edit Student | Username: {{student.admin.username}} | ID:{{student.admin.id}}
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action={% url 'AdminSaveEditStudent' %} method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="card-body">
-                            <!-- Username and Ajax div -->
-                            <div class="form-row">
-                                <div class="form-group col-md-10">
-                                    <label for="username">Username:</label>
-                                    <input type="text" class="form-control" id="username" name="username"
-                                        value="{{student.admin.username}}">
-                                </div>
-                                <div class="col-md-2" style="
-                                margin-top: 3.1%;">
-
-                                    <button type="button" id="check_user" class="btn btn-dark align-center">Check
-                                        User</button>
-
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="firstname">First Name:</label>
-                                    <input type="text" class="form-control" id="firstname" name="firstName"
-                                        value="{{student.admin.first_name}}">
-                                    <input type="hidden" class="form-control" id="student_id" name="student_id"
-                                        value="{{student.admin.id}}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="lastname">Last Name:</label>
-                                    <input type="text" class="form-control" id="lastname" name="lastName"
-                                        value="{{student.admin.last_name}}">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="email">Email Address:</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        value="{{student.admin.email}}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="address">Address:</label>
-                                    <input type="text" class="form-control" id="address" name="address"
-                                        value="{{student.address}}">
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="course">Current Course:</label>
-                                    <select class="form-control" name="current_course" id="current_course">
-                                        {% for course in courses %}
-                                        {% if course.id == student.course_id.id %}
-                                        <option value="{{course.id}}">{{course.course_name}} </option>
-                                        {% else %}
-                                        {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="course">Change Course:</label>
-                                    <select class="form-control" name="change_course" id="change_course">
-                                        {% for course in courses %}
-                                        {% if course.id == student.course_id.id %}
-                                        {% else %}
-                                        <option value="{{course.id}}">{{course.course_name}} </option>
-                                        {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="session_start">Current Session Start:</label>
-                                    <input type="date" class="form-control" id="curr_start_date"
-                                        value="{{ student.session_start_year|date:'Y-m-d' }}"
-                                        name="curr_session_start_date">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="session_end">Current Session End:</label>
-                                    <input type="date" class="form-control" id="end_date"
-                                        value="{{ student.session_end_year|date:'Y-m-d' }}"
-                                        name="curr_session_end_date">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="session_start">Change Session Start:</label>
-                                    <input type="date" class="form-control" id="start_date" value="{{ student.session_start_year|date:'Y-m-d' }}"
-                                        name="change_session_start_date">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="session_end">Change Session End:</label>
-                                    <input type="date" class="form-control" id="end_date" name="change_session_end_date"
-                                    value="{{ student.session_end_year|date:'Y-m-d' }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="profile_pic">Profile Pic:</label>
-                                <input type="file" class="form-control" id="profile_pic" name="profile_picture"
-                                >
-                            </div>
-
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-dark">Save Changes</button>
-                        </div>
-                    </form><!-- Form end -->
+                    {% url 'AdminSaveEditStudent' as action_path %}
+{% include 'dashboard/admin/form_template.html' with messages=messages form=form action_path=action_path button_text='Edit'  %}
+                    <!-- Form end -->
                 </div><!-- /.card -->
             </div> <!-- col-md-12 -->
         </div>

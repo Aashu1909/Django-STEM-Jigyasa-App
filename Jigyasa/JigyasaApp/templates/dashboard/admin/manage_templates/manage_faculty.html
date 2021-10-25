@@ -58,7 +58,7 @@ Manage Staff
                     <td>{{staff.address}}</td>
                     <td>{{staff.admin.last_login}}</td>
                     <td>{{staff.admin.date_joined}}</td>
-                    <td><a href="/app/admin_edit_faculty_page/{{staff.admin.id}}/" class="btn btn-dark">Edit</a></td>
+                    <td><a href="{% url 'AdminEditFaculty' staff_id=staff.admin.id %}" class="btn btn-dark">Edit</a></td>
                   </tr>
                 {% endfor %}
                   

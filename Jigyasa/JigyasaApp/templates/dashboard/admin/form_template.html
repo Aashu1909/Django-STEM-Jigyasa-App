@@ -1,85 +1,14 @@
- <!-- form start -->
- <form action={% url 'AdminSaveStudent' %} method="post" enctype="multipart/form-data">
+<form action={{action_path}} method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="card-body">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="firstname">First Name:</label>
-                <input type="text" class="form-control" id="firstname" name="firstName"
-                    placeholder="Enter your First Name">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="lastname">Last Name:</label>
-                <input type="text" class="form-control" id="lastname" name="lastName"
-                    placeholder="Enter your Last Name">
-            </div>
-        </div>
-        <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="email">Email Address:</label>
-            <input type="email" class="form-control" id="email" name="email"
-                placeholder="Enter your Email Address.">
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="sex">Sex:</label>
-            <select class="form-control" name="sex" id="sex">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Others">others</option>
-            </select>
-        </div>
-        </div>
+        {% for field in form %}
         <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" class="form-control" id="address" name="address"
-                placeholder="Enter your Address.">
+           {{field.error}}
+           {{field.label_tag}}
+           {{field}}
         </div>
-       
-        <div class="form-group">
-            <label for="course">Select Your Course:</label>
-            <select class="form-control" name="course" id="course">
-                {% for course in courses %}
-                <option value="{{course.id}}">{{course.course_name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="session_start">Session Start:</label>
-                <input type="date" class="form-control" id="start_date" name="session_start_date"
-                    placeholder="Session Start Date">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="session_end">Session End:</label>
-                <input type="date" class="form-control" id="end_date" name="session_end_date"
-                    placeholder="Session End Date">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username"
-                placeholder="Enter your username">
-        </div>
-        <div class="form-group">
-            <label for="profile_pic">Profile Pic:</label>
-            <input type="file" class="form-control" id="profile_pic" name="profile_pic"
-            >
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password"
-                    placeholder="Enter your Password">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="password1">Confirm Password:</label>
-                <input type="password" class="form-control" id="password1" name="password1"
-                    placeholder="Enter your Password Again.">
-            </div>
-        </div>
-    </div>
+        {% endfor %}
     <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Add Student</button>
+        <button type="submit" class="btn btn-primary">{{button_text}}</button>
     </div>
-</form><!-- Form end -->
+</form>

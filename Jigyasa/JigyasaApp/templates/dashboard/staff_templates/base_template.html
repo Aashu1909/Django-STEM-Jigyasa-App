@@ -1,0 +1,267 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> {% block title %} {% endblock title %} </title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href={% static 'dashboard/plugins/fontawesome-free/css/all.min.css' %}>
+  <!-- Ionicons -->
+  
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet"
+    href={% static 'dashboard/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}>
+  <!-- iCheck -->
+  <link rel="stylesheet" href={% static 'dashboard/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}>
+  <!-- JQVMap -->
+  <link rel="stylesheet" href={% static 'dashboard/plugins/jqvmap/jqvmap.min.css' %}>
+  <!-- Theme style -->
+  <link rel="stylesheet" href={% static 'dashboard/dist/css/adminlte.min.css' %}>
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href={% static 'dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}>
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href={% static 'dashboard/plugins/daterangepicker/daterangepicker.css' %}>
+  <!-- summernote -->
+  <link rel="stylesheet" href={% static 'dashboard/plugins/summernote/summernote-bs4.css' %}>
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <style>
+  {% block custom_css %}
+  {% endblock custom_css %}
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+
+
+
+
+      <!-- Right navbar links -->
+      {% load static %}
+      <ul class="navbar-nav ml-auto">
+        <!-- search Form -->
+        <form class="form-inline ml-3">
+          <div class="input-group input-group-sm">
+            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+              <button class="btn btn-navbar" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-comments"></i>
+            <span class="badge badge-danger navbar-badge">3</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a href="#" class="dropdown-item">
+              <!-- Message Start -->
+              <div class="media">
+                <img src={% static 'dashboard/dist/img/user1-128x128.jpg' %} alt="User Avatar"
+                  class="img-size-50 mr-3 img-circle">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    Brad Diesel
+                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                  </h3>
+                  <p class="text-sm">Call me whenever you can...</p>
+                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                </div>
+              </div>
+              <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <!-- Message Start -->
+              <div class="media">
+                <img src={% static 'dashboard/dist/img/user8-128x128.jpg' %} alt="User Avatar"
+                  class="img-size-50 img-circle mr-3">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    John Pierce
+                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                  </h3>
+                  <p class="text-sm">I got your message bro</p>
+                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                </div>
+              </div>
+              <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <!-- Message Start -->
+              <div class="media">
+                <img src={% static 'dashboard/dist/img/user3-128x128.jpg' %} alt="User Avatar"
+                  class="img-size-50 img-circle mr-3">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    Nora Silvester
+                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                  </h3>
+                  <p class="text-sm">The subject goes here</p>
+                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                </div>
+              </div>
+              <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+          </div>
+        </li>
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-warning navbar-badge">15</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-item dropdown-header">15 Notifications</span>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-envelope mr-2"></i> 4 new messages
+              <span class="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-users mr-2"></i> 8 friend requests
+              <span class="float-right text-muted text-sm">12 hours</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-file mr-2"></i> 3 new reports
+              <span class="float-right text-muted text-sm">2 days</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="fas fa-power-off"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-item dropdown-header">Power Off Menu</span>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-user-edit"></i>Edit Your Profile
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="{%url 'logout' %}" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            <div class="dropdown-divider"></div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+
+    <!-- Main Sidebar Container -->
+    {% include 'dashboard/staff_templates/sidebar_template.html' with user=user id=id   %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">
+                {% block main_title %}
+                {% endblock main_title %}
+              </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">
+                  {% block side_title %}
+                  {% endblock side_title %}
+                </li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+
+      <!-- Content Header (Page header) -->
+      <!-- Main content -->
+      {% block main_content %}
+      {% endblock main_content %}
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- footer -->
+    {% include 'dashboard/admin/footer.html' %}
+
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+  </script>
+  <script src={% static 'dashboard/plugins/jquery/jquery.min.js' %}></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src={% static 'dashboard/plugins/jquery-ui/jquery-ui.min.js' %}></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src={% static 'dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js' %}></script>
+  <!-- ChartJS -->
+  <script src={% static 'dashboard/plugins/chart.js/Chart.min.js' %}></script>
+  <!-- Sparkline -->
+  <script src={% static 'dashboard/plugins/sparklines/sparkline.js' %}></script>
+  <!-- JQVMap -->
+  <script src={% static 'dashboard/plugins/jqvmap/jquery.vmap.min.js' %}></script>
+  <script src={% static 'dashboard/plugins/jqvmap/maps/jquery.vmap.usa.js' %}></script>
+  <!-- jQuery Knob Chart -->
+  <script src={% static 'dashboard/plugins/jquery-knob/jquery.knob.min.js' %}></script>
+  <!-- daterangepicker -->
+  <script src={% static 'dashboard/plugins/moment/moment.min.js' %}></script>
+  <script src={% static 'dashboard/plugins/daterangepicker/daterangepicker.js' %}></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src={% static 'dashboard/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}></script>
+  <!-- Summernote -->
+  <script src={% static 'dashboard/plugins/summernote/summernote-bs4.min.js' %}></script>
+  <!-- overlayScrollbars -->
+  <script src={% static 'dashboard/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}></script>
+  <!-- AdminLTE App -->
+  <script src={% static 'dashboard/dist/js/adminlte.js' %}></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src={% static 'dashboard/dist/js/pages/dashboard.js' %}></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src={% static 'dashboard/dist/js/demo.js' %}></script>
+
+  {% block custom_js %}
+  
+  {% endblock custom_js %}
+
+
+</body>
+
+</html>
