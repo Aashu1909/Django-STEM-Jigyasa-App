@@ -4,7 +4,7 @@
   <a href="{% url 'FacultyHome' %}" class="brand-link">
     <img src={% static 'dashboard/dist/img/AdminLTELogo.png' %} alt="AdminLTE Logo"
       class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">JIGYASA</span>
+    <span class="brand-text font-weight-light">JIGYASA Staff Panel</span>
   </a>
 
   <!-- Sidebar -->
@@ -25,6 +25,7 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+          <!-- Home -->
         {% url 'FacultyHome' as FacultyHome %}
         <li class="nav-item">
           <a href='{{FacultyHome}}' class="nav-link {% if request.path == FacultyHome %}active {% endif %}  ">
@@ -35,6 +36,7 @@
             </p>
           </a>
         </li>
+        <!-- Take Attendnace -->
         {% url 'FacultyTakeAttendance' as FacultyTakeAttendance %}
         <li class="nav-item">
           <a href='{{FacultyTakeAttendance}}' class="nav-link {% if request.path == FacultyTakeAttendance %}active {% endif %}  ">
@@ -45,12 +47,33 @@
             </p>
           </a>
         </li>
+        <!-- Update Attendance -->
         {% url 'FacultyViewUpdateAttendance' as FacultyViewUpdateAttendance %}
         <li class="nav-item">
           <a href='{{FacultyViewUpdateAttendance}}' class="nav-link {% if request.path == FacultyViewUpdateAttendance %}active {% endif %}  ">
             <i class="fas fa-home"></i>
             <p>
               View/Update Attendance
+            </p>
+          </a>
+        </li>
+        <!-- Apply Leave -->
+        {% url 'FacultyApplyLeave' as FacultyApplyLeave %}
+        <li class="nav-item">
+          <a href='{{FacultyApplyLeave}}' class="nav-link {% if request.path == FacultyApplyLeave %}active {% endif %}  ">
+            <i class="fas fa-home"></i>
+            <p>
+              Apply Leave
+            </p>
+          </a>
+        </li>
+        <!-- Feedback  -->
+        {% url 'FacultyFeedbackMenu' as FacultyFeedbackMenu %}
+        <li class="nav-item">
+          <a href='{{FacultyFeedbackMenu}}' class="nav-link {% if request.path == FacultyFeedbackMenu %}active {% endif %}  ">
+            <i class="fas fa-home"></i>
+            <p>
+              Staff Feedback
             </p>
           </a>
         </li>

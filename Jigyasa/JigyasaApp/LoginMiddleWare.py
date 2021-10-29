@@ -27,11 +27,13 @@ class LoginCheckMiddleWare(MiddlewareMixin):
                     return HttpResponseRedirect(reverse('AdminHome'))
             elif user.user_type == '2':
                 print('user type :2')
+                print(user.first_name)
+                print(user.id)
                 if modulename == 'JigyasaApp.Staff_views' or modulename == "django.views.static":
-                    print('staffviews')
+                    print('staffviews&Static')
                     pass
-                elif modulename == 'JigyasaApp.views':
-                    print('views-student')
+                elif  modulename == 'JigyasaApp.views':
+                    print('views->for->staff')
                     pass
                 else:
                     return HttpResponseRedirect(reverse('FacultyHome'))
@@ -41,14 +43,14 @@ class LoginCheckMiddleWare(MiddlewareMixin):
                     print('studentviews')
                     pass
                 elif modulename == 'JigyasaApp.views':
-                    print('views-student')
+                    print('views->for->student')
                     pass
                 else:
                     return HttpResponseRedirect(reverse('StudentHome'))
         else:
             print('userNot authenticated')           
-            if request.path == reverse('ShowLogin') or request.path == reverse('doLogin') or request.path == reverse('homePage'):
-                print('pass:login or showlogin homepage')
+            if request.path == reverse('ShowLogin') or request.path == reverse('doLogin') or request.path == reverse('homePage') or modulename == "django.contrib.auth.urls":
+                print('pass:->login or showlogin or homepage or modulename= django.contrib.auth.urls')
                 pass
             else:
                 if request.path == reverse('ShowLogin'):

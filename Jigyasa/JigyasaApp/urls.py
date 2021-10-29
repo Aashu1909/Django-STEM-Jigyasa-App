@@ -1,11 +1,12 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from .import Admin_views,Staff_views,Student_views
 from .import views
 urlpatterns = [
-     path('login_page',views.ShowLoginPage,name="ShowLogin"),
-     path('doLogin',views.doLogin,name="doLogin"),
-     path('logout_user', views.logout_user,name="logout"),
+     path('login_page/',views.ShowLoginPage,name="ShowLogin"),
+     path('doLogin/',views.doLogin,name="doLogin"),
+     path('logout_user/', views.logout_user,name="Logout_user"),
+     path('accounts/', include('django.contrib.auth.urls'),name="Accounts"),
      # path('admin_login/',views.admin_login,name='AdminLogin'),
      # path('admin_login_page/',views.admin_login_page,name='adminLoginPage'),
      # path('admin_user_logout/',views.admin_user_logout,name='AdminLogout'),
@@ -41,6 +42,7 @@ urlpatterns = [
      path('admin_session_year_save_page/', Admin_views.manage_session_save, name='AdminManageSessionSave'),
 
      path('check_user_availabilty/', views.check_user_availability, name='CheckUserAvailabilty'),
+     path('check_email_availabilty/', views.check_email_availability, name='CheckEmailAvailabilty'),
 
          
      # path('faculty_login/',views.faculty_login, name='FacultyLogin'),
@@ -55,11 +57,21 @@ urlpatterns = [
      path('faculty_get_attendance_dates/', Staff_views.get_attendance, name="FacultyGetAttendance"),
      path('faculty_fetch_student/', Staff_views.fetch_student, name="FacultyFetchStudent"),
      path('faculty_updated_attendance/', Staff_views.updated_attendance, name="FacultyUpdatedAttendance"),
+     path('faculty_apply_leave/', Staff_views.apply_leave, name="FacultyApplyLeave"),
+     path('faculty_apply_leave_save/', Staff_views.apply_leave_save, name="FacultyApplyLeaveSave"),
+     path('faculty_feedback_menu/', Staff_views.feedback_menu, name="FacultyFeedbackMenu"),
+     path('faculty_feedback_save/', Staff_views.feedback_save, name="FacultyFeedbackSave"),
 
      # path('student_login/',views.student_login,name='StudentLogin'),
      # path('student_user_logout/',views.student_user_logout,name='StudentLogout'),
      # path('student_login_page/',views.student_login_page, name='StudentLoginPage'),
-     path('student_signup_page/',views.signup_student_page, name='StudentSignupPage'),
+     # path('student_signup_page/',views.signup_student_page, name='StudentSignupPage'),
      path('student_home_page/',Student_views.student_home, name='StudentHome'),
-
+     path('student_view_attendance/',Student_views.view_attendance, name='StudentViewAttendance'),
+     path('student_view_attendance_get/',Student_views.view_attendence_get, name='GetStudentAttendanceReport'),
+     path('student_apply_leave/', Student_views.apply_leave, name="StudentApplyLeave"),
+     path('student_apply_leave_save/', Student_views.apply_leave_save, name="StudentApplyLeaveSave"),
+     path('student_feedback_menu/', Student_views.feedback_menu, name="StudentFeedbackMenu"),
+     path('student_feedback_save/', Student_views.feedback_save, name="StudentFeedbackSave"),
+     
 ]

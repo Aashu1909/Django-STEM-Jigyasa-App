@@ -1,0 +1,84 @@
+{% extends 'dashboard/student_templates/base_template.html'%}
+{% load static %}
+
+{% block title %}
+Student View Attendance
+{% endblock title%}
+
+{% block main_title %}
+Student View Attendance Data
+{% endblock main_title%}
+{% block page_title %}
+Student View Attendance Data
+{% endblock page_title%}
+
+{% block custom_css %}
+
+{% endblock custom_css %}
+
+
+
+
+{% block main_content %}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Attendance Data</h3>
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right"
+                                    placeholder="Search">
+
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Subject Name</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if attendance_reports %}
+                                {% for attendance_report in attendance_reports %}
+                                <tr>
+                                    <td> {{ attendance_report.student_id.id }}</td>
+                                    <td>{{ attendance_report.student_id.admin.first_name }} {{ attendance_report.student_id.admin.last_name }}</td>
+                                    <td>{{ attendance_report.attendance_id.subject_id.subject_name }}</td>
+                                    <td> {{ attendance_report.attendance_id.attendance_date }}</td>
+                                    <td>{% if attendance_report.status == True %}
+                                        <span class="badge badge-pill badge-success">Present</span>
+                                        {% elif attendance_report.status == False %}
+                                        <span class="badge badge-pill badge-danger">Absent</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <div class="alert alert-danger text-center">No Attendance Data Found!</div>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{% endblock main_content %}

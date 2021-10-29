@@ -1,6 +1,8 @@
-from django.http.response import HttpResponse,JsonResponse
+from django.http.response import HttpResponse,JsonResponse,HttpResponseRedirect
 from django.shortcuts import render
-from .models import SessionYearModel, Subjects, Students, Attendance,AttendanceReport
+from django.urls import reverse
+from django.contrib import messages
+from .models import CustomUser, LeaveReportStaff, SessionYearModel, Staffs, Subjects, Students, Attendance,AttendanceReport,FeedBackStaffs
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -16,7 +18,6 @@ def take_attendance(request):
 
 # Here We are using Csrf Exempt Token because We are
 # Not using any form submit our data.
-
 def view_attendance(request):
     return render(request,'dashboard/staff_templates/staff_view_attendance.html')
 
@@ -122,3 +123,55 @@ def updated_attendance(request):
     except Exception as e:
         return HttpResponse(e)
     
+
+def apply_leave(request):
+    admin_obj=CustomUser.objects.get(id=request.user.id)
+    staff_obj=Staffs.objects.get(admin=admin_obj)
+    prev_leave_data=LeaveReportStaff.objects.filter(staff_id=staff_obj)
+    param={
+        'prev_leave_data':prev_leave_data
+    }
+    return render(request,'dashboard/staff_templates/staff_apply_leave.html',param)
+
+def apply_leave_save(request):
+    if request.method != "POST":
+        return HttpResponse("Method not allowed")
+    else:
+        leave_date = request.POST.get('leave_date')
+        leave_reason = request.POST.get('leave_reason')
+        try:
+            admin_obj=CustomUser.objects.get(id=request.user.id)
+            staff_obj = Staffs.objects.get(admin=admin_obj)
+            leave_report_obj=LeaveReportStaff(staff_id=staff_obj,leave_date=leave_date,leave_message=leave_reason)
+            leave_report_obj.save()
+            messages.success(request, "Succesfully Applied Leave Application")
+            return HttpResponseRedirect(reverse('FacultyApplyLeave'))
+        except Exception as e:
+            messages.error(request, e)
+            return HttpResponseRedirect(reverse('FacultyApplyLeave'))
+
+
+def feedback_menu(request):
+    admin_obj=CustomUser.objects.get(id=request.user.id)
+    staff_obj=Staffs.objects.get(admin=admin_obj)
+    prev_feedback_data=FeedBackStaffs.objects.filter(staff_id=staff_obj)
+    param={
+        'feedbacks':prev_feedback_data
+    }
+    return render(request,'dashboard/staff_templates/staff_feedback_page.html',param)
+
+def feedback_save(request):
+    if request.method != "POST":
+        return HttpResponse("Method not allowed")
+    else:
+        feedback_message = request.POST.get('feedback_message')
+        try:
+            admin_obj=CustomUser.objects.get(id=request.user.id)
+            staff_obj = Staffs.objects.get(admin=admin_obj)
+            feedback_obj=FeedBackStaffs(staff_id=staff_obj,feedback=feedback_message)
+            feedback_obj.save()
+            messages.success(request, "Feedsback Recieved")
+            return HttpResponseRedirect(reverse('FacultyFeedbackMenu'))
+        except Exception as e:
+            messages.error(request, e)
+            return HttpResponseRedirect(reverse('FacultyFeedbackMenu'))

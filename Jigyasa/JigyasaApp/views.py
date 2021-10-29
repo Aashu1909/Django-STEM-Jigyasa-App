@@ -31,71 +31,25 @@ def check_user_availability(request):
             response=json.dumps(status)
         return HttpResponse(response)
       
+def check_email_availability(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        print('username:'+str(username))
+        all_users=CustomUser.objects.all()
+        username_list=[]
+        for user in all_users:
+            username_list.append(user.username)
+        
+        if username in username_list:
+            status={'status':'no'}
+            response=json.dumps(status)
+        else:
+            status={'status':'yes'}
+            response=json.dumps(status)
+        return HttpResponse(response)
 
-# def admin_login(request):
-#     if request.method!="POST":
-#         return HttpResponse("<h2>Method Not Allowed</h2>")
-#     else:
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#         print(email)
-#         print(password)
-#         user=EmailBackEnd.authenticate(request,username=email,password=password)
-#         if user!=None:
-#             if user.user_type=="1":
-#                 login(request,user)
-#                 return HttpResponseRedirect(reverse('AdminHome'))
-#             else:
-#                 messages.error(request,"Invalid Login Details")
-#                 return HttpResponseRedirect(reverse('AdminLogin'))
-#         else:
-#             messages.error(request,"Invalid Login Details")
-#             return HttpResponseRedirect(reverse('AdminLogin'))
-
-# def faculty_login(request):
-#     if request.method!="POST":
-#         messages.error(request,"Not A POST method")
-#         return HttpResponseRedirect("FacultyLogin")
-#     else:
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#         print(email)
-#         print(password)
-#         user=EmailBackEnd.authenticate(request,username=email,password=password)
-#         if user!=None:
-#             if user.user_type=="2":
-#                 login(request,user)
-#                 return HttpResponseRedirect(reverse("FacultyHome"))
-#             else:
-#                 messages.error(request,"User Not A Faculty.Please Contact your Administrator.")
-#                 return HttpResponseRedirect(reverse('FacultyLogin'))
-#         else:
-#             messages.error(request,"Invalid Login Details")
-#             return HttpResponseRedirect("FacultyLogin")
-
-# def student_login(request):
-#     if request.method!="POST":
-#         print('NotPOst')
-#         messages.error(request,"Method NOT POST")
-#         return HttpResponseRedirect(reverse('StudentLogin'))
-#     else:
-#         print('Post')
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#         print(email)
-#         print(password)
-#         user=EmailBackEnd.authenticate(request,username=email,password=password)
-#         if user!=None:
-#             login(request,user)
-#             print('usernotnone')
-#             if user.user_type=="3":
-#                 return HttpResponseRedirect(reverse('StudentHome'))
-#             else:
-#                 messages.error(request,"User not a Student.Please contact with the Administrator")
-#                 return HttpResponseRedirect(reverse('StudentLogin'))
-#         else:
-#             messages.error(request,"Invalid Login Details")
-#             return HttpResponseRedirect(reverse('StudentLogin'))
+def password_reset(request):
+    pass
 
 def doLogin(request):
     if request.method!="POST":
@@ -163,3 +117,68 @@ def signup_student_page(request):
 #     return HttpResponseRedirect(reverse('StudentLoginPage'))
 
 
+
+# def admin_login(request):
+#     if request.method!="POST":
+#         return HttpResponse("<h2>Method Not Allowed</h2>")
+#     else:
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         print(email)
+#         print(password)
+#         user=EmailBackEnd.authenticate(request,username=email,password=password)
+#         if user!=None:
+#             if user.user_type=="1":
+#                 login(request,user)
+#                 return HttpResponseRedirect(reverse('AdminHome'))
+#             else:
+#                 messages.error(request,"Invalid Login Details")
+#                 return HttpResponseRedirect(reverse('AdminLogin'))
+#         else:
+#             messages.error(request,"Invalid Login Details")
+#             return HttpResponseRedirect(reverse('AdminLogin'))
+
+# def faculty_login(request):
+#     if request.method!="POST":
+#         messages.error(request,"Not A POST method")
+#         return HttpResponseRedirect("FacultyLogin")
+#     else:
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         print(email)
+#         print(password)
+#         user=EmailBackEnd.authenticate(request,username=email,password=password)
+#         if user!=None:
+#             if user.user_type=="2":
+#                 login(request,user)
+#                 return HttpResponseRedirect(reverse("FacultyHome"))
+#             else:
+#                 messages.error(request,"User Not A Faculty.Please Contact your Administrator.")
+#                 return HttpResponseRedirect(reverse('FacultyLogin'))
+#         else:
+#             messages.error(request,"Invalid Login Details")
+#             return HttpResponseRedirect("FacultyLogin")
+
+# def student_login(request):
+#     if request.method!="POST":
+#         print('NotPOst')
+#         messages.error(request,"Method NOT POST")
+#         return HttpResponseRedirect(reverse('StudentLogin'))
+#     else:
+#         print('Post')
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         print(email)
+#         print(password)
+#         user=EmailBackEnd.authenticate(request,username=email,password=password)
+#         if user!=None:
+#             login(request,user)
+#             print('usernotnone')
+#             if user.user_type=="3":
+#                 return HttpResponseRedirect(reverse('StudentHome'))
+#             else:
+#                 messages.error(request,"User not a Student.Please contact with the Administrator")
+#                 return HttpResponseRedirect(reverse('StudentLogin'))
+#         else:
+#             messages.error(request,"Invalid Login Details")
+#             return HttpResponseRedirect(reverse('StudentLogin'))
