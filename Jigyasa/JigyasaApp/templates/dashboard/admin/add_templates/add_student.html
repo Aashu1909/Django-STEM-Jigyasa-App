@@ -16,7 +16,7 @@ Add Student
 {% block main_content %}
 <section class="content">
     <div class="container-fluid">
-
+        <div id="Jqery_alerts"></div>
         <!-- Main column -->
         <div class="row">
             <div class="col-md-12">
@@ -57,3 +57,96 @@ Add Student
     </div><!-- /.container-fluid -->
 </section>
 {% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function(){
+        console.log('Admin Add Student Ready')
+        $('#email').keyup(function(event){
+            var email=$(this).val()
+            console.log(email)
+            var formData = {
+            'email': email,
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        }
+               // Here we have specified the request the browser must make with its attributes
+               if(email!=""){
+                $.ajax({
+                    url:"{% url 'CheckEmailAvailabilty' %}",
+                    type:'POST',
+                    data:formData
+                })
+                .done(function(data){
+                    parsedData = JSON.parse(data)
+                    console.log(data);
+                    if(parsedData['status'] == 'no'){
+                        $(".email_error").remove();
+                        $("<span class='email_error badge badge-danger' style='padding: 10px;color: white;font-weight: bold;margin:10px 0;'>Email Not Available</span>").insertAfter("#email");
+                    }
+                    else{
+                        $(".email_error").remove();
+                        $("<span class='email_error badge badge-success' style='padding: 10px;color: white;font-weight: bold;margin:10px 0;'>Email Available</span>").insertAfter("#email");
+                    }
+                })
+                .fail(function(){
+                    console.log("failed");
+                })
+            }
+            else{
+              $(".email_error").remove();
+            }
+            // when the ajax call is completed .done is called .
+            // it willl recieve the data from views.py from the backend django server.
+            
+        // this function help us to prevent the default nature of the submit event.(which is to reload itself.)
+        event.preventDefault();
+            
+        })
+       
+        $('#username').keyup(function(event){
+            var username=$(this).val()
+            console.log(username)
+            var formData = {
+            'username': username,
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        }
+               // Here we have specified the request the browser must make with its attributes
+               if(username!=""){
+                $.ajax({
+                    url:"{% url 'CheckUserAvailabilty' %}",
+                    type:'POST',
+                    data:formData
+                })
+                .done(function(data){
+                    parsedData = JSON.parse(data)
+                    console.log(data);
+                    if(parsedData['status'] == 'no'){
+                        $(".username_error").remove();
+                        $("<span class='username_error badge badge-danger' style='padding: 10px;color: white;font-weight: bold;margin:10px 0;'>Username Not Available</span>").insertAfter("#username");
+                    }
+                    else{
+                        $(".username_error").remove();
+                        $("<span class='username_error badge badge-success' style='padding: 10px;color: white;font-weight: bold;margin:10px 0;'>Username Available</span>").insertAfter("#username");
+                    }
+                })
+                .fail(function(){
+                    console.log("failed");
+                })
+            }
+            else{
+              $(".username_error").remove();
+            }
+            // when the ajax call is completed .done is called .
+            // it willl recieve the data from views.py from the backend django server.
+            
+        // this function help us to prevent the default nature of the submit event.(which is to reload itself.)
+        event.preventDefault();
+            
+        })
+       
+    })
+
+
+</script>
+{% endblock custom_js %}
+

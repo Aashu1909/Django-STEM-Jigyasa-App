@@ -7,12 +7,12 @@ class DateInput(forms.DateInput):
 
 
 class AddStudentForms(forms.Form):
-    first_name = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class': 'form-control'}),required=True)
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class':'form-control'}), required=True)
-    profile_pic = forms.FileField(label='Profile Pic',widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
+    first_name = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'class': 'form-control','id':'first_name'}))
+    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'class': 'form-control','id':'last_name'}))
+    address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'class': 'form-control','id':'address'}))
+    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class': 'form-control','id':'username'}),required=True)
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class':'form-control','id':'email'}), required=True)
+    profile_pic = forms.FileField(label='Profile Pic',widget=forms.FileInput(attrs={'class': 'form-control','id':'profile_pic'}), required=False)
     courses = Courses.objects.all()
     course_list = []
     try:
@@ -47,12 +47,12 @@ class AddStudentForms(forms.Form):
 
 
 class EditStudentForms(forms.Form):
-    email = forms.EmailField(label='Email',widget=forms.EmailInput(attrs={'class':'form-control'}))
-    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    first_name = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    profile_pic = forms.FileField(label='Profile Pic', widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
+    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class': 'form-control','id':'username'}))
+    first_name = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'class': 'form-control','id':'first_name'}))
+    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'class': 'form-control','id':'last_name'}))
+    email = forms.EmailField(label='Email',widget=forms.EmailInput(attrs={'class':'form-control','id':'email'}))
+    address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'class': 'form-control','id':'address'}))
+    profile_pic = forms.FileField(label='Profile Pic', widget=forms.FileInput(attrs={'class': 'form-control','id':'profile_pic'}), required=False)
     courses = Courses.objects.all()
     course_list = []
     for course in courses:
@@ -75,6 +75,6 @@ class EditStudentForms(forms.Form):
             session_list.append(small_session)
     except:
         session_list=[]
-    sex = forms.ChoiceField(label='Sex', choices=gender_choice,widget=forms.Select(attrs={'class': 'form-control'}))
-    session_year_id = forms.ChoiceField(label='Session Year', choices=session_list, widget=forms.Select(attrs={'class': 'form-control'}))
-    courses = forms.ChoiceField(label='Courses', choices=course_list,widget=forms.Select(attrs={'class': 'form-control'}) )
+    sex = forms.ChoiceField(label='Sex', choices=gender_choice,widget=forms.Select(attrs={'class': 'form-control','id':'sex'}))
+    session_year_id = forms.ChoiceField(label='Session Year', choices=session_list, widget=forms.Select(attrs={'class': 'form-control','id':'session_year_id'}))
+    courses = forms.ChoiceField(label='Courses', choices=course_list,widget=forms.Select(attrs={'class': 'form-control','id':'courses'}) )

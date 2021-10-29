@@ -30,23 +30,26 @@ def check_user_availability(request):
             status={'status':'yes'}
             response=json.dumps(status)
         return HttpResponse(response)
+    else:
+        return HttpResponse('Method Not allowed')
       
 def check_email_availability(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        print('username:'+str(username))
-        all_users=CustomUser.objects.all()
-        username_list=[]
-        for user in all_users:
-            username_list.append(user.username)
-        
-        if username in username_list:
+        email = request.POST.get('email')
+        print('email:'+str(email))
+        all_users=CustomUser.objects.filter(email=email).exists() 
+        print(all_users)
+        if all_users:
+            print('Exist')
             status={'status':'no'}
             response=json.dumps(status)
         else:
+            print('Not Exist')
             status={'status':'yes'}
             response=json.dumps(status)
         return HttpResponse(response)
+    else:
+        return HttpResponse('Method Not allowed')
 
 def password_reset(request):
     pass
