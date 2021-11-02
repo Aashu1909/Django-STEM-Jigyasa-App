@@ -2,19 +2,208 @@
 {% load static %}
 
 {% block title %}
-Student Home 
+Student Home
 {% endblock title%}
 
 {% block main_title %}
 Student Home
 {% endblock main_title%}
 {% block page_title %}
-Student Home 
+Student Home
 {% endblock page_title%}
 
 {% block main_content %}
 <section class="content">
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{total_attendance}}</h3>
+
+            <p>Total Attendance</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <a href="{% url 'StudentViewAttendance'  %}" class="small-box-footer">More info <i
+              class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{present}}</h3>
+
+            <p>Present</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <a href="{% url 'StudentViewAttendance'  %}" class="small-box-footer">More info <i
+              class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>{{absent}}</h3>
+
+            <p>Absent</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a href="{% url 'StudentViewAttendance'  %}" class="small-box-footer">More info <i
+              class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>{{subjects}}</h3>
+
+            <p>Subjects</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card card-danger">
+          <div class="card-header">
+            <h3 class="card-title">Pie Chart</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand">
+                <div class=""></div>
+              </div>
+              <div class="chartjs-size-monitor-shrink">
+                <div class=""></div>
+              </div>
+            </div>
+            <canvas id="pieChart"
+              style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 489px;"
+              width="978" height="500" class="chartjs-render-monitor"></canvas>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+      <div class="col-lg-6">
+
+        <!-- BAR CHART -->
+        <div class="card card-success">
+          <div class="card-header">
+            <h3 class="card-title">Bar Chart</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+              <canvas id="barChart"
+                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
   </div>
 </section>
 {% endblock main_content %}
+
+{% block custom_js %}
+<script>
+  console.log('Student Home')
+  $(document).ready(function () {
+    var donutData = {
+      labels: [
+        'Absent',
+        'Present',
+        'Total Attendnace',
+      ],
+      datasets: [{
+        data: [{{absent}}, {{present}}, {{total_attendance}}],
+        backgroundColor: ['#f56954', '#00a65a', '#ffc107'],
+      }]
+    }
+    // PIE CHART.
+    // Get context with jQuery - using jQuery's .get() method.
+    pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+    var pieData = donutData;
+    var pieOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    })
+
+    //- BAR CHART -
+    //-------------
+    // Data Set for bar chart
+    var areaChartData = {
+      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label               : 'Digital Goods',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : [28, 48, 40, 19, 86, 27, 90]
+        } 
+      ]
+    }
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = jQuery.extend(true, {}, areaChartData)
+    var temp1 = areaChartData.datasets[0]
+    barChartData.datasets[0] = temp1
+    
+    var barChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      datasetFill             : false
+    }
+
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar', 
+      data: barChartData,
+      options: barChartOptions
+    })
+
+  });
+</script>
+{% endblock custom_js %}

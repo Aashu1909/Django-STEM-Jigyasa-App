@@ -1,5 +1,3 @@
-from django import http
-from django.http import response
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -50,9 +48,6 @@ def check_email_availability(request):
         return HttpResponse(response)
     else:
         return HttpResponse('Method Not allowed')
-
-def password_reset(request):
-    pass
 
 def doLogin(request):
     if request.method!="POST":

@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.urls import path,include
 from .import Admin_views,Staff_views,Student_views
 from .import views
+
 urlpatterns = [
+
      path('login_page/',views.ShowLoginPage,name="ShowLogin"),
      path('doLogin/',views.doLogin,name="doLogin"),
      path('logout_user/', views.logout_user,name="Logout_user"),
@@ -13,6 +15,8 @@ urlpatterns = [
      path('admin_user_details/',views.admin_user_details,name='AdminDetails'),
      path('admin_signup_page/',views.signup_admin_page,name='adminSignupPage'),
      path('admin_home_page/',Admin_views.home,name='AdminHome'),
+     path('admin_edit_profile/',Admin_views.edit_profile,name='AdminEditProfile'),
+     path('admin_edit_profile_save/',Admin_views.edit_profile_save,name='AdminEditProfileSave'),
      # Admin Faculty paths
      path('admin_add_faculty_page/',Admin_views.add_faculty, name='AdminAddFaculty'),
      path('admin_add_faculty_save_page/',Admin_views.add_faculty_save, name='AdminSaveFaculty'),
@@ -40,9 +44,25 @@ urlpatterns = [
      # manage session year
      path('admin_manage_session_year_page/', Admin_views.manage_session, name='AdminManageSession'),
      path('admin_session_year_save_page/', Admin_views.manage_session_save, name='AdminManageSessionSave'),
-
+     # Admin View Attendance.
+     path('admin_view_attendance/', Admin_views.view_attendance, name='AdminViewAttendnace'),
+     path('admin_get_attendance_dates/', Admin_views.get_attendance_date, name='AdminGetAttendnaceDate'),
+     path('admin_fetch_student/', Admin_views.fetch_student_data, name='AdminFetchStudentData'),
+     # Leave
+     path('admin_view_staff_leave_page/', Admin_views.view_staff_leave_page, name='AdminViewStaffLeavePage'),
+     path('admin_staff_leave_approve/<str:leave_id>/', Admin_views.staff_approve_leave, name='AdminStaffLeaveApproved'),
+     path('admin_staff_leave_disapprove/<str:leave_id>/', Admin_views.staff_disapprove_leave, name='AdminStaffLeaveDisapproved'),
+     path('admin_view_student_leave_page/', Admin_views.view_student_leave_page, name='AdminViewStudentLeavePage'),
+     path('admin_student_leave_approve/<str:leave_id>/', Admin_views.student_approve_leave, name='AdminStudentLeaveApproved'),
+     path('admin_student_leave_disapprove/<str:leave_id>/', Admin_views.student_disapprove_leave, name='AdminStudentLeaveDisapproved'),
+     # Username And Email Availibility
      path('check_user_availabilty/', views.check_user_availability, name='CheckUserAvailabilty'),
      path('check_email_availabilty/', views.check_email_availability, name='CheckEmailAvailabilty'),
+     # Feedbacks
+     path('student_feedback_message/', Admin_views.student_feedback_message, name='AdminStudentFeedbackMessage'),
+     path('student_feedback_message_replied/', Admin_views.student_feedback_message_replied, name='AdminStudentFeedbackMessageReplied'),
+     path('staff_feedback_message/', Admin_views.staff_feedback_message, name='AdminStaffFeedbackMessage'),
+     path('staff_feedback_message_replied/', Admin_views.staff_feedback_message_replied, name='AdminStaffFeedbackMessageReplied'),
 
          
      # path('faculty_login/',views.faculty_login, name='FacultyLogin'),
@@ -61,6 +81,8 @@ urlpatterns = [
      path('faculty_apply_leave_save/', Staff_views.apply_leave_save, name="FacultyApplyLeaveSave"),
      path('faculty_feedback_menu/', Staff_views.feedback_menu, name="FacultyFeedbackMenu"),
      path('faculty_feedback_save/', Staff_views.feedback_save, name="FacultyFeedbackSave"),
+     path('faculty_edit_profile/',Staff_views.edit_profile,name='StaffEditProfile'),
+     path('faculty_edit_profile_save/',Staff_views.edit_profile_save,name='StaffEditProfileSave'),
 
      # path('student_login/',views.student_login,name='StudentLogin'),
      # path('student_user_logout/',views.student_user_logout,name='StudentLogout'),
@@ -73,5 +95,7 @@ urlpatterns = [
      path('student_apply_leave_save/', Student_views.apply_leave_save, name="StudentApplyLeaveSave"),
      path('student_feedback_menu/', Student_views.feedback_menu, name="StudentFeedbackMenu"),
      path('student_feedback_save/', Student_views.feedback_save, name="StudentFeedbackSave"),
-     
+     path('student_edit_profile/',Student_views.edit_profile,name='StudentEditProfile'),
+     path('student_edit_profile_save/',Student_views.edit_profile_save,name='StudentEditProfileSave'),
+          
 ]

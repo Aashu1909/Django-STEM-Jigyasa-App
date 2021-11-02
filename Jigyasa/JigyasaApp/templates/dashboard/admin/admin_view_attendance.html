@@ -1,0 +1,307 @@
+{% extends 'dashboard/admin/base_template.html'%}
+{% load static %}
+
+{% block title %}
+Admin View Attendance
+{% endblock title%}
+
+{% block main_title %}
+Admin View Attendance Page
+{% endblock main_title%}
+{% block page_title %}
+Admin View Attendance
+{% endblock page_title%}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="backend-messages">
+            {% if messages %}
+            {% for message in messages  %}
+            {% if message.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!!</strong> {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            {% if message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!!!</strong> {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <!-- Main column -->
+            <div id="save_message">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">View Attendance</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Subject </label>
+                            <select class="form-control" name="subject" id="subject">
+                                {% for subject in subjects %}
+                                <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Session Year</label>
+                            <select class="form-control" name="session_year" id="session_year">
+                                {% for session_year in session_years %}
+                                <option value="{{ session_year.id }}">{{ session_year.session_start_year }} TO
+                                    {{ session_year.session_end_year }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-block" id="fetch_attendance">Fetch
+                                Attendance
+                                Record
+                            </button>
+                        </div>
+                        <!-- Form end -->
+                    </div><!-- /.card -->
+
+                </div> <!-- Form end -->
+                <div id="attendance_data">
+                </div>
+                <div id="student_data">
+                </div>
+            </div><!-- /.card -->
+        </div> <!-- col-md-12 -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+    console.log('Staff Update Attendance')
+    // So when the document is ready
+    $(document).ready(function () {
+        console.log('Ready')
+        // here we are listening to the click event on fetch Attendnce Button 
+
+        $('#fetch_attendance').click(function () {
+            // First Forms ie to select 
+            // Subject and Session id
+            var formData = {
+                'subject_id': $('#subject').val(),
+                'session_year': $('#session_year').val()
+            }
+            // making an ajax call to get Classes Dates.
+            $.ajax({
+                    url: "{% url 'AdminGetAttendnaceDate' %}",
+                    type: "POST",
+                    data: formData
+                })
+                .done(function (response) {
+                    console.log('Done Function')
+                    // parsing the response from Backend
+                    var data = JSON.parse(response)
+                    // Dynamic Html For Attendance Dates
+                    // if we recieved any dates else we show an error message.
+                    if (data.length > 0) {
+                        var html_data = `
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Attendance Dates</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Attendance Date</label>
+                                        <select class="form-control" name="attendance_date" id="attendance_date">
+                                        </select>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" onclick="fetch_student()" class="btn btn-primary btn-block" id="fetch_student">Fetch Student Data
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>`
+                        $('#attendance_data').html(html_data)
+                        var optionHtml = ``
+                        // Since The response that we parsed results into a dictionary
+                        for (var key in data) {
+
+                            optionHtml +=
+                                ` <option value="${data[key]['id']}">${data[key]['attendance_date']}</option>`
+                        }
+                        // Targeting the select TAG in the dynamical generated HTml.
+                        // And Appending in it.
+                        $('#attendance_date').html(optionHtml)
+                    } else {
+                        // Error Message
+                        var error_div = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Success!!</strong>No Dates Recieved
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>`
+                        $('#save_message').html(error_div)
+
+                    }
+
+                })
+                .fail(function (response) {
+                    console.log('fail Function')
+                    console.log(response)
+                })
+        })
+    });
+    // Since we are using the onclick funtionality of javascript 
+    // we have to create this Fetch Student Fucntion Outsilr $(Document).ready block
+    function fetch_student() {
+        // Fetching the attendance Date and subjectid and session id form the above two card
+        var formData = {
+            'subject_id': $('#subject').val(),
+            'session_year': $('#session_year').val(),
+            'attendance_date_id': $('#attendance_date').val()
+        }
+        console.log(formData)
+        // making an ajx call
+        $.ajax({
+                url: "{% url 'AdminFetchStudentData' %}",
+                type: "POST",
+                data: formData
+            })
+            .done(function (response) {
+                console.log('.Done function')
+                attendance_data = JSON.parse(response)
+                // Starting another card. Consisting of five column
+                var div_data = `
+                <div class="card card-primary">
+                    <div class="card-header">
+                            <h3 class="card-title">Attendance Record</h3>
+                        </div>
+                    <div class="card-body">  
+                        <div class="form-group">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Student Id</th>
+                                        <th scope="col">Admin Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Attedance</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody id="table_row">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>`;
+                $('#student_data').html(div_data)
+                // Now Adding their Data
+                var table_data = ``
+                for (var student in attendance_data) {
+
+                    if (attendance_data[student].status == true) {
+                        table_data +=
+                            `<tr>
+                                <td>${attendance_data[student].admin_id}</td>
+                                <td>${attendance_data[student].student_id}</td>
+                                <td>${attendance_data[student].name}</td>
+                                <td><span class="badge badge-success">Present</span></td>
+                            </tr>`
+                    } else {
+                        table_data +=
+                            `<tr>
+                                <td>${attendance_data[student].student_id}</td>
+                                <td>${attendance_data[student].admin_id}</td>
+                                <td>${attendance_data[student].name}</td>
+                                <td><span class="badge badge-danger">Absent</span></td>
+                            </tr>`
+                    }
+                }
+                // adding the  html in table roe
+                $('#table_row').html(table_data)
+            })
+
+            .fail(function (response) {
+                console.log('fail Function')
+                console.log(response)
+            })
+
+        // On click Update attendance Button
+        // $(document).on("click", "#update_attendance", function () {
+        //     console.log('Update after Save attendance')
+        //     var attendance_data = $("input[ name='attendance_data[]']").map(function () {
+        //         if ($(this).is(":checked")) {
+        //             // here if the input tag contain checked='checked'
+        //             return {
+        //                 "id": $(this).val(),
+        //                 "status": 1
+        //             };
+        //         } else {
+        //             // here the input tag contain checked='' or no attribute named checked
+        //             return {
+        //                 "id": $(this).val(),
+        //                 "status": 0
+        //             };
+        //         }
+        //     }).get()
+
+        //     // Converting it to Json before sending it.
+        //     var formData = {
+        //         'student_ids': JSON.stringify(attendance_data),
+        //         'attendance_model_id': $('#attendance_date').val(),
+        //         'subject_id': $('#subject').val(),
+        //         'session_year': $('#session_year').val()
+        //     }
+        //     $.ajax({
+        //             url: "{% url 'FacultyUpdatedAttendance' %}",
+        //             type: "POST",
+        //             data: formData
+        //         })
+        //         .done(function (response) {
+
+        //             var success_div = `
+        //             <div class="alert alert-success alert-dismissible fade show" role="alert">
+        //                 <strong>Success!!</strong>${response}
+        //                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //                 <span aria-hidden="true">&times;</span>
+        //                 </button>
+        //             </div>`
+        //             $('#save_message').html(success_div)
+
+        //         })
+        //         .fail(function (response) {
+        //             console.log('fail Function')
+        //             console.log(response)
+        //             var fail_div = `   
+        //                 <div class="alert alert-Danger alert-dismissible fade show" role="alert">
+        //                 <strong>Success!!</strong>${response}
+        //                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //                 <span aria-hidden="true">&times;</span>
+        //                 </button>
+        //             </div>`
+        //             $('#save_message').html(fail_div)
+        //         })
+        // })
+
+
+}
+</script>
+
+{% endblock custom_js %}

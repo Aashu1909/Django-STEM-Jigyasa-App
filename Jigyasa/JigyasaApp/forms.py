@@ -12,7 +12,7 @@ class AddStudentForms(forms.Form):
     address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'class': 'form-control','id':'address'}))
     username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class': 'form-control','id':'username'}),required=True)
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class':'form-control','id':'email'}), required=True)
-    profile_pic = forms.FileField(label='Profile Pic',widget=forms.FileInput(attrs={'class': 'form-control','id':'profile_pic'}), required=False)
+    profile_pic = forms.FileField(label='Profile Pic',widget=forms.FileInput(attrs={'class': 'form-control','id':'profile_pic'}), required=True)
     courses = Courses.objects.all()
     course_list = []
     try:
@@ -33,7 +33,6 @@ class AddStudentForms(forms.Form):
             session_list.append(small_session)
     except:
         session_list=[]
-    print(session_list)
     gender_choice = (
         ("Male", "Male"),
         ("Female", "Female"),

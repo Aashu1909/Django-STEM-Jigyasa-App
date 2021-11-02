@@ -2,13 +2,83 @@ from django.http.response import HttpResponse,JsonResponse,HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
-from .models import CustomUser, LeaveReportStaff, SessionYearModel, Staffs, Subjects, Students, Attendance,AttendanceReport,FeedBackStaffs
+from .models import Courses, CustomUser, LeaveReportStaff, SessionYearModel, Staffs, Subjects, Students, Attendance,AttendanceReport,FeedBackStaffs
 from django.views.decorators.csrf import csrf_exempt
 import json
 
 
 def faculty_home(request):
-    return render(request, 'dashboard/staff_templates/home_content.html')
+    # First This is to find how many student are studying under one faculty member.
+    admin_staff_obj=CustomUser.objects.get(id=request.user.id)
+    staff_obj=Staffs.objects.get(admin=admin_staff_obj)
+    subject_obj=Subjects.objects.filter(staff_id=staff_obj.admin.id)
+    # Total Subject count.
+    subject_obj_count=Subjects.objects.filter(staff_id=staff_obj.admin.id).count()
+    course_id_list=[]
+    subject_id_list=[]
+    subject_name_list=[]
+    for subject in subject_obj:
+        # Now from the subject object getting the Course and hence getting the student.
+        course_obj=Courses.objects.get(id=subject.course_id.id)
+        # Here we are appending the Course id
+        course_id_list.append(course_obj.id)
+        if subject.id not in subject_id_list:
+            subject_id_list.append(subject.id)
+            subject_name_list.append(subject.subject_name)
+    # Now Making the final course list
+    final_course=[]
+    for course_id in course_id_list:
+        if course_id not in final_course:
+            final_course.append(course_id)
+    # Now finally filtering the Student from Studnet table
+    student_count=Students.objects.filter(course_id__in=final_course).count()
+    attendance_count=Attendance.objects.filter(subject_id__in=subject_id_list).count()
+    leave_total=LeaveReportStaff.objects.filter(staff_id=staff_obj).count()
+    leave_approved=LeaveReportStaff.objects.filter(staff_id=staff_obj,leave_status=1).count()
+    leave_disapproved=LeaveReportStaff.objects.filter(staff_id=staff_obj,leave_status=2).count()
+    print(leave_total)
+    params={
+        'total_student_count':student_count,
+        'total_subject_count':subject_obj_count,
+        'total_attendance_count':attendance_count,
+        'total_leave_applied':leave_total,
+        'total_leave_approved':leave_approved,
+        'total_leave_diapproved':leave_disapproved,
+        'subject_name_list':subject_name_list
+    }
+    return render(request, 'dashboard/staff_templates/home_content.html',params)
+
+
+def edit_profile(request):
+    user=CustomUser.objects.get(id=request.user.id)
+    param={
+        'user':user
+    }
+    return render(request,'dashboard/staff_templates/edit_profile.html',param)
+
+
+def edit_profile_save(request):
+    if request.method!="POST":
+        return HttpResponseRedirect(reverse("StaffEditProfile"))
+    else:
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        password=request.POST.get("password")
+        try:
+            customuser=CustomUser.objects.get(id=request.user.id)
+            customuser.first_name=first_name
+            customuser.last_name=last_name
+            
+            customuser.save()
+            messages.success(request, "Successfully Updated Profile")
+            return HttpResponseRedirect(reverse("StaffEditProfile"))
+        except:
+            messages.error(request, "Failed to Update Profile")
+            return HttpResponseRedirect(reverse("StaffEditProfile"))
+
+
+
+
 
 def take_attendance(request):
     subjects = Subjects.objects.filter(staff_id=request.user.id)
@@ -102,6 +172,7 @@ def fetch_student(request):
         report_data_list.append(small_data)
     print(report_data_list)
     return JsonResponse(json.dumps(report_data_list),content_type="application/json",safe=False)
+
 
 @csrf_exempt
 def updated_attendance(request):

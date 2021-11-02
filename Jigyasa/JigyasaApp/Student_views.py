@@ -7,9 +7,48 @@ from .models import Attendance, AttendanceReport, Courses, CustomUser, FeedBackS
 
 def student_home(request):
     if str(request.user.user_type) =='3':
-        return render(request, 'dashboard/student_templates/home_content.html')
+        custom_obj=CustomUser.objects.get(id=request.user.id)
+        student_obj=Students.objects.get(admin=custom_obj)
+        attendance_total=AttendanceReport.objects.filter(student_id=student_obj).count()
+        attendance_present=AttendanceReport.objects.filter(student_id=student_obj,status=True).count()
+        attendance_absent=AttendanceReport.objects.filter(student_id=student_obj,status=False).count()
+        course=Courses.objects.get(id=student_obj.course_id.id)
+        subject=Subjects.objects.filter(course_id=course).count()
+        params={
+            'total_attendance':attendance_total,
+            'present':attendance_present,
+            'absent':attendance_absent,
+            'subjects':subject
+        }
+        return render(request, 'dashboard/student_templates/home_content.html',params)
     else: 
         return HttpResponse(reverse('ShowLogin'))
+
+def edit_profile(request):
+    user=CustomUser.objects.get(id=request.user.id)
+    param={
+        'user':user
+    }
+    return render(request,'dashboard/admin/edit_profile.html',param)
+
+def edit_profile_save(request):
+    if request.method!="POST":
+        return HttpResponseRedirect(reverse("StudentEditProfile"))
+    else:
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        password=request.POST.get("password")
+        try:
+            customuser=CustomUser.objects.get(id=request.user.id)
+            customuser.first_name=first_name
+            customuser.last_name=last_name
+            
+            customuser.save()
+            messages.success(request, "Successfully Updated Profile")
+            return HttpResponseRedirect(reverse("StudentEditProfile"))
+        except:
+            messages.error(request, "Failed to Update Profile")
+            return HttpResponseRedirect(reverse("StudentEditProfile"))
 
 def view_attendance(request):
     user_obj=CustomUser.objects.get(id=request.user.id)

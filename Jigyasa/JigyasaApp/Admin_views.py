@@ -1,15 +1,43 @@
-from django.http.response import HttpResponseRedirect
+from functools import partial
+from django.http.response import HttpResponseRedirect,JsonResponse
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import CustomUser, Staffs, Courses, Students, Subjects, SessionYearModel
+from .models import CustomUser, FeedBackStaffs,Attendance,AttendanceReport,FeedBackStudent, LeaveReportStaff, LeaveReportStudent, Staffs, Courses, Students, Subjects, SessionYearModel
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from .forms import AddStudentForms, EditStudentForms
 from django.urls import reverse
-
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 def home(request):
     return render(request, 'dashboard/admin/home_content.html')
+
+def edit_profile(request):
+    user=CustomUser.objects.get(id=request.user.id)
+    param={
+        'user':user
+    }
+    return render(request,'dashboard/admin/edit_profile.html',param)
+
+def edit_profile_save(request):
+    if request.method!="POST":
+        return HttpResponseRedirect(reverse("AdminEditProfile"))
+    else:
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        password=request.POST.get("password")
+        try:
+            customuser=CustomUser.objects.get(id=request.user.id)
+            customuser.first_name=first_name
+            customuser.last_name=last_name
+            
+            customuser.save()
+            messages.success(request, "Successfully Updated Profile")
+            return HttpResponseRedirect(reverse("AdminEditProfile"))
+        except:
+            messages.error(request, "Failed to Update Profile")
+            return HttpResponseRedirect(reverse("AdminEditProfile"))
 
 
 # Staffs
@@ -344,6 +372,7 @@ def edit_subject_save(request):
             return HttpResponseRedirect('/app/admin_edit_subject_page/'+subject_id+"/")
 
 
+# Sessions
 def manage_session(request):
     return render(request, 'dashboard/admin/manage_templates/manage_session_year.html')
 
@@ -365,3 +394,134 @@ def manage_session_save(request):
         except Exception as e:
             messages.error(request, e)
             return HttpResponseRedirect(reverse("AdminManageSession"))
+
+
+# Feedback 
+def staff_feedback_message(request):
+    staff_feedback=FeedBackStaffs.objects.all()
+    param={
+        'feedbacks':staff_feedback
+    }
+    return render(request,'dashboard/admin/staff_feedback.html',param)
+
+@csrf_exempt
+def staff_feedback_message_replied(request):
+    feedback_id=request.POST.get("id")
+    feedback_message=request.POST.get("message")
+
+    try:
+        feedback=FeedBackStaffs.objects.get(id=feedback_id)
+        feedback.feedback_reply=feedback_message
+        feedback.save()
+        return HttpResponse("True")
+    except:
+        return HttpResponse("False")
+
+
+def student_feedback_message(request):
+    student_feedback=FeedBackStudent.objects.all()
+    param={
+        'feedbacks':student_feedback
+    }
+    return render(request,'dashboard/admin/student_feedback.html',param)
+
+@csrf_exempt
+def student_feedback_message_replied(request):
+    feedback_id=request.POST.get("id")
+    feedback_message=request.POST.get("message")
+
+    try:
+        feedback=FeedBackStudent.objects.get(id=feedback_id)
+        feedback.feedback_reply=feedback_message
+        feedback.save()
+        return HttpResponse("True")
+    except:
+        return HttpResponse("False")
+
+
+# Leave Status
+def view_staff_leave_page(request):
+    leaves=LeaveReportStaff.objects.all()
+    return render(request,"dashboard/admin/staff_leave.html",{"leaves":leaves})
+
+
+def view_student_leave_page(request):
+    leaves=LeaveReportStudent.objects.all()
+    return render(request,"dashboard/admin/student_leave.html",{"leaves":leaves})
+
+# Approve Student Leave
+def student_approve_leave(request,leave_id):
+    leave=LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status=1
+    leave.save()
+    return HttpResponseRedirect(reverse("AdminViewStudentLeavePage"))
+
+# Disaproved Student Leave
+def student_disapprove_leave(request,leave_id):
+    leave=LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status=2
+    leave.save()
+    return HttpResponseRedirect(reverse("AdminViewStudentLeavePage"))
+
+# Approve Student Leave
+def staff_approve_leave(request,leave_id):
+    leave=LeaveReportStaff.objects.get(id=leave_id)
+    leave.leave_status=1
+    leave.save()
+    return HttpResponseRedirect(reverse("AdminViewStaffLeavePage"))
+
+# Disapprove
+def staff_disapprove_leave(request,leave_id):
+    leave=LeaveReportStaff.objects.get(id=leave_id)
+    leave.leave_status=2
+    leave.save()
+    return HttpResponseRedirect(reverse("AdminViewStaffLeavePage"))
+
+# View Attendance
+def view_attendance(request):
+    courses=Courses.objects.all()
+    subjects=Subjects.objects.all()
+    session_obj=SessionYearModel.objects.all()
+    params={'courses':courses,'session_years':session_obj,'subjects':subjects}
+    return render(request,'dashboard/admin/admin_view_attendance.html',params)
+
+# Separate file for subjects
+def get_subject(request):
+    subjects=Subjects.objects.all()
+    session_obj=SessionYearModel.objects.all()
+    params={'subjects':subjects,'session_years':session_obj}
+    return render(request,'dashboard/admin/admin_view_attendance.html',params)
+
+@csrf_exempt
+def get_attendance_date(request):
+    subject_id=request.POST.get('subject_id')
+    session_id=request.POST.get('session_year')
+    attendance_record=Attendance.objects.filter(subject_id=str(subject_id),session_year_id=str(session_id))
+    attendance_record_list=[]
+    for attendance in attendance_record:
+        data={
+            'id':attendance.id,
+            'attendance_date':str(attendance.attendance_date),
+            'session_year_id':attendance.session_year_id.id
+        }
+        attendance_record_list.append(data)
+
+    return JsonResponse(json.dumps(attendance_record_list),safe=False)
+
+@csrf_exempt
+def fetch_student_data(request):
+    print('Fetch Student')
+    attendance_date_id=request.POST.get('attendance_date_id')
+
+    attendance_model=Attendance.objects.get(id=attendance_date_id)
+    attendance_report=AttendanceReport.objects.filter(attendance_id=attendance_model)
+    report_data_list=[]
+    for student in attendance_report:
+        small_data={'student_id':student.student_id.id,
+        'admin_id':student.student_id.admin.id,
+        "name":student.student_id.admin.first_name+" "+student.student_id.admin.last_name,
+        'status':student.status
+        }
+        report_data_list.append(small_data)
+    print(report_data_list)
+    return JsonResponse(json.dumps(report_data_list),content_type="application/json",safe=False)
