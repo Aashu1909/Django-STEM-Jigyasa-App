@@ -15,6 +15,7 @@ Staff Home
 {% block main_content %}
 <section class="content">
   <div class="container-fluid">
+    <!-- Cards -->
     <div class="row">
       <div class="col-lg-3 col-6">
         <!-- small box -->
@@ -79,8 +80,9 @@ Staff Home
       </div>
       <!-- ./col -->
     </div>
+    <!-- Pie Chart -->
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <div class="card card-danger">
           <div class="card-header">
             <h3 class="card-title">Leave Approved Vs Leave Disapproved</h3>
@@ -99,27 +101,53 @@ Staff Home
 
         </div>
       </div>
-      <div class="col-lg-6">
-           <!-- BAR CHART -->
-           <div class="card card-success">
-            <div class="card-header">
-              <h3 class="card-title">Bar Chart</h3>
-  
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-              </div>
+    </div>
+    <!-- bar Chart 1 -->
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <!-- BAR CHART -->
+        <div class="card card-success">
+          <div class="card-header">
+            <h3 class="card-title">Subject Wise Attendance</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
             </div>
-            <div class="card-body">
-              <div class="chart">
-                <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-              </div>
-            </div>
-            <!-- /.card-body -->
           </div>
-          <!-- /.card -->
-        
+          <div class="card-body">
+            <div class="chart">
+              <canvas id="barChart"
+                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+      </div>
+    </div>
+    <!-- Bar Chart 2 -->
+    <div class="row">
+      <div class="col-lg-12">
+           <div class="card card-info">
+          <div class="card-header">
+            <h3 class="card-title">Student Attendance Data</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+              <canvas id="barChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+          </div>
+      <!-- /.card-body -->
+        </div>
       </div>
     </div>
   </div>
@@ -131,17 +159,15 @@ Staff Home
   console.log('Staff Home Page')
   $(document).ready(function () {
     console.log('ready')
-    var donutData        = {
+    var donutData = {
       labels: [
-          'Leave Diapproved', 
-          'Leaves Approved',
+        'Leave Diapproved',
+        'Leaves Approved',
       ],
-      datasets: [
-        {
-          data: [{{total_leave_diapproved}},{{total_leave_approved}}],
-          backgroundColor : ['#f56954', '#00a65a'],
-        }
-      ]
+      datasets: [{
+        data: [{{total_leave_diapproved}}, {{total_leave_approved}}],
+        backgroundColor: ['#f56954', '#00a65a'],
+      }]
     }
 
     // Get context with jQuery - using jQuery's .get() method.
@@ -159,56 +185,89 @@ Staff Home
       options: pieOptions
     })
 
-    // Area Chart Dataset
-    var areaChartData = {
-      
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label               : 'Digital Goods',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
-        },
-        {
-          label               : 'Electronics',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
-        },
-      ]
+    // BarChart Dataset
+    // Attendance_list from Backend
+    var attendance_list = {{subject_wise_attendance}}
+    // Subject List from Backend
+    var subject_list = {{ subject_name_list|safe }};
+    var barChartData = {
+
+      labels: subject_list,
+      datasets: [{
+        label: 'Subject Wise Attendnace',
+        backgroundColor: 'rgba(60,141,188,0.9)',
+        borderColor: 'rgba(60,141,188,0.8)',
+        pointRadius: false,
+        pointColor: '#3b8bba',
+        pointStrokeColor: 'rgba(60,141,188,1)',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(60,141,188,1)',
+        data: attendance_list
+      }]
     }
-
-
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = jQuery.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
+    var temp0 = barChartData.datasets[0]
+    barChartData.datasets[0] = temp0 //Digitals GOOD
 
     var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false
     }
 
     var barChart = new Chart(barChartCanvas, {
-      type: 'bar', 
+      type: 'bar',
       data: barChartData,
       options: barChartOptions
-    })
+    }) 
+    
+    // Bar chart 2
+    var student_list={{ student_list|safe }};
+    var present_list={{ student_present_list }};
+    var absent_list={{ student_absent_list }};
+    var barChartData2 = {
+                  labels  : student_list,
+                  datasets: [
+                    {
+                      label               : 'Student Attendance Chart For Present',
+                      backgroundColor     : 'rgba(60,141,188,0.9)',
+                      borderColor         : 'rgba(60,141,188,0.8)',
+                      pointRadius          : false,
+                      pointColor          : '#3b8bba',
+                      pointStrokeColor    : 'rgba(60,141,188,1)',
+                      pointHighlightFill  : '#fff',
+                      pointHighlightStroke: 'rgba(60,141,188,1)',
+                      data                : present_list
+                    },
+                    {
+                      label               : 'Student Attendance Chart for Absent',
+                      backgroundColor     : 'rgba(200,141,188,0.9)',
+                      borderColor         : 'rgba(200,141,188,0.8)',
+                      pointRadius          : false,
+                      pointColor          : '#3b8bba',
+                      pointStrokeColor    : 'rgba(60,141,188,1)',
+                      pointHighlightFill  : '#fff',
+                      pointHighlightStroke: 'rgba(60,141,188,1)',
+                      data                : absent_list
+                    }
+                  ]
+                }
+                var barChartCanvas2 = $('#barChart2').get(0).getContext('2d')
+                var temp2 = barChartData2.datasets[0]
+                barChartData2.datasets[0] = temp2
 
-  }); // Document Ready End here
+                var barChartOptions2 = {
+                  responsive              : true,
+                  maintainAspectRatio     : false,
+                  datasetFill             : false
+                }
+
+                var barChart2 = new Chart(barChartCanvas2, {
+                  type: 'bar',
+                  data: barChartData2,
+                  options: barChartOptions2
+                })
+    
+}); // Document Ready End here
 </script>
 {% endblock custom_js %}

@@ -17,34 +17,58 @@ def faculty_home(request):
     course_id_list=[]
     subject_id_list=[]
     subject_name_list=[]
+    attendance_list_count=[]
+    
     for subject in subject_obj:
         # Now from the subject object getting the Course and hence getting the student.
         course_obj=Courses.objects.get(id=subject.course_id.id)
         # Here we are appending the Course id
         course_id_list.append(course_obj.id)
         if subject.id not in subject_id_list:
+            # getting there ids
             subject_id_list.append(subject.id)
+            # Getting the  name of subjects
             subject_name_list.append(subject.subject_name)
+        # getting te count of student present in each subject Classes.
+        attendance_obj_count=Attendance.objects.filter(subject_id=subject.id).count()
+        attendance_list_count.append(attendance_obj_count)
     # Now Making the final course list
+
     final_course=[]
     for course_id in course_id_list:
         if course_id not in final_course:
             final_course.append(course_id)
     # Now finally filtering the Student from Studnet table
+    
+    student_attendance=Students.objects.filter(course_id__in=final_course)
+    student_list=[]
+    student_present_list=[]
+    student_absent_list=[]
+    for student in student_attendance:
+        attendance_present=AttendanceReport.objects.filter(status=True,student_id=student.id).count()
+        attendance_absent=AttendanceReport.objects.filter(status=False,student_id=student.id).count()
+        student_name=str(student.admin.first_name)+" "+str(student.admin.last_name)
+        student_list.append(student_name)
+        student_present_list.append(attendance_present)
+        student_absent_list.append(attendance_absent)
+    
     student_count=Students.objects.filter(course_id__in=final_course).count()
     attendance_count=Attendance.objects.filter(subject_id__in=subject_id_list).count()
     leave_total=LeaveReportStaff.objects.filter(staff_id=staff_obj).count()
     leave_approved=LeaveReportStaff.objects.filter(staff_id=staff_obj,leave_status=1).count()
     leave_disapproved=LeaveReportStaff.objects.filter(staff_id=staff_obj,leave_status=2).count()
-    print(leave_total)
     params={
+        'student_list':student_list,
+        'student_present_list':student_present_list,
+        'student_absent_list':student_absent_list,
         'total_student_count':student_count,
         'total_subject_count':subject_obj_count,
         'total_attendance_count':attendance_count,
         'total_leave_applied':leave_total,
         'total_leave_approved':leave_approved,
         'total_leave_diapproved':leave_disapproved,
-        'subject_name_list':subject_name_list
+        'subject_name_list':subject_name_list, 
+        'subject_wise_attendance':attendance_list_count
     }
     return render(request, 'dashboard/staff_templates/home_content.html',params)
 
@@ -63,7 +87,7 @@ def edit_profile_save(request):
     else:
         first_name=request.POST.get("first_name")
         last_name=request.POST.get("last_name")
-        password=request.POST.get("password")
+        
         try:
             customuser=CustomUser.objects.get(id=request.user.id)
             customuser.first_name=first_name
@@ -75,9 +99,6 @@ def edit_profile_save(request):
         except:
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("StaffEditProfile"))
-
-
-
 
 
 def take_attendance(request):
@@ -203,6 +224,7 @@ def apply_leave(request):
         'prev_leave_data':prev_leave_data
     }
     return render(request,'dashboard/staff_templates/staff_apply_leave.html',param)
+
 
 def apply_leave_save(request):
     if request.method != "POST":

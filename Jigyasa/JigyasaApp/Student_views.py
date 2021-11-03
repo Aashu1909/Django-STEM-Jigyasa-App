@@ -14,11 +14,25 @@ def student_home(request):
         attendance_absent=AttendanceReport.objects.filter(student_id=student_obj,status=False).count()
         course=Courses.objects.get(id=student_obj.course_id.id)
         subject=Subjects.objects.filter(course_id=course).count()
+        subject_name=[]
+        data_absent=[]
+        data_present=[]
+        subjects_data=Subjects.objects.filter(course_id=student_obj.course_id)
+        for subject in subjects_data:
+            attendance=Attendance.objects.filter(subject_id=subject.id)
+            attendance_present_count=AttendanceReport.objects.filter(attendance_id__in=attendance,status=True).count()
+            attendance_absent_count=AttendanceReport.objects.filter(attendance_id__in=attendance,status=False).count()
+            subject_name.append(subject.subject_name)
+            data_present.append(attendance_present_count)
+            data_absent.append(attendance_absent_count)
         params={
             'total_attendance':attendance_total,
             'present':attendance_present,
             'absent':attendance_absent,
-            'subjects':subject
+            'subjects':len(subject_name),
+            'subject_name':subject_name,
+            'attendance_present':data_present,
+            'attendance_absent':data_absent
         }
         return render(request, 'dashboard/student_templates/home_content.html',params)
     else: 
