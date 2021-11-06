@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.deletion import CASCADE
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 
 
 # Create your models here.
@@ -145,6 +145,40 @@ class NotificationStaffs(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
+
+
+class StudentResult(models.Model):
+    id=models.AutoField(primary_key=True)
+    student_id=models.ForeignKey(Students,on_delete=models.CASCADE)
+    subject_id=models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    subject_total_marks=models.FloatField(default=0)
+    subject_scored_marks=models.FloatField(default=0)
+    created_at=models.DateField(auto_now_add=True)
+    update_at=models.DateField(auto_now_add=True)
+
+
+class ScheduleMeeting(models.Model):
+    id=models.AutoField(primary_key=True)
+    topic_name=models.CharField(max_length=255)
+    staff_id=models.ForeignKey(Staffs,on_delete=models.CASCADE)
+    subject_id=models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    start_url=models.CharField(max_length=6000,default='')
+    join_url=models.CharField(max_length=6000,default='')
+    meeting_password=models.CharField(max_length=600,default='')
+    date=models.DateField()
+    time=models.TimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+
+
+# class ShareNotes(models.Model):
+#     id=models.AutoField(primary_key=True)
+#     staff_id=models.ForeignKey(Staffs,on_delete=models.CASCADE)
+#     subject_id=models.ForeignKey(Subjects,on_delete=models.CASCADE)
+#     notes=models.FileField()
+#     created_at=models.DateField(auto_now_add=True)
+#     update_at=models.DateField(auto_now_add=True)
 
 
 @receiver(post_save, sender=CustomUser)

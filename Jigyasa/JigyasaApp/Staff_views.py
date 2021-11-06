@@ -1,11 +1,13 @@
+from datetime import date
+from time import time
 from django.http.response import HttpResponse,JsonResponse,HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
-from .models import Courses, CustomUser, LeaveReportStaff, SessionYearModel, Staffs, Subjects, Students, Attendance,AttendanceReport,FeedBackStaffs
+from .models import Courses, CustomUser, LeaveReportStaff, ScheduleMeeting, SessionYearModel, Staffs, Subjects, Students, Attendance,AttendanceReport,FeedBackStaffs
 from django.views.decorators.csrf import csrf_exempt
 import json
-
+from .zoom_meeting import createMeeting
 
 def faculty_home(request):
     # First This is to find how many student are studying under one faculty member.
@@ -244,6 +246,68 @@ def apply_leave_save(request):
             return HttpResponseRedirect(reverse('FacultyApplyLeave'))
 
 
+def schedule_meeting(request):
+    admin_obj=CustomUser.objects.get(id=request.user.id)
+    staff_obj = Staffs.objects.get(admin=admin_obj)
+    subjects=Subjects.objects.filter(staff_id=admin_obj)
+    prev_schedule_meetings=ScheduleMeeting.objects.filter(staff_id=staff_obj)
+    param={
+        'prev_schedule_meetings':prev_schedule_meetings,
+        'subjects':subjects
+    }
+    return render(request,'dashboard/staff_templates/staff_schedule_meeting.html',param)
+
+
+def schedule_meeting_save(request):
+    if request.method != "POST":
+        return HttpResponse("Method not allowed")
+    else:
+        subject_id = request.POST.get('subject')
+        topic = request.POST.get('topic')
+        schedule_date = request.POST.get('date')
+        schedule_time = request.POST.get('time')
+        password = request.POST.get('password')
+        meetingdetails = {
+                        'host_email': 'ashutoshshrivastava00@gmail.com',
+                        'schedule_for':'ashutoshshrivastava00@gmail.com',
+                        "topic": str(topic),
+                        "type": 2,
+                        "start_time": f"{schedule_date}T{schedule_time}",
+                        "duration": "45",
+                        "timezone": "Asia/Calcutta",
+                        "agenda": "test",
+                        'password': str(password),
+                        "recurrence": {"type": 1,
+                                        "repeat_interval": 1
+                                    },
+                        "settings": {
+                            "host_video": "true",
+                            "participant_video": "true",
+                            "join_before_host": "False",
+                            "mute_upon_entry": "False",
+                            "watermark": "true",
+                            "audio": "voip",
+                            "auto_recording": "cloud"
+                            },
+                        "registrants_email_notification": "true"
+                        }
+        try:
+            create_meeting=createMeeting(meetingdetails)
+            print(create_meeting['join_url'])
+            print(create_meeting['password'])
+            admin_obj=CustomUser.objects.get(id=request.user.id)
+            staff_obj = Staffs.objects.get(admin=admin_obj)
+            subject_obj=Subjects.objects.get(id=subject_id)
+            schedule_meeting=ScheduleMeeting(topic_name=topic,staff_id=staff_obj,subject_id=subject_obj,
+            start_url=create_meeting['start_url'],join_url=create_meeting['join_url'],meeting_password=create_meeting['password'],date=schedule_date,time=schedule_time)
+            schedule_meeting.save()
+            messages.success(request, "Succesfully Created Meeting")
+            return HttpResponseRedirect(reverse('FacultyScheduleMeeting'))
+        except Exception as e:
+            messages.error(request, e)
+            return HttpResponseRedirect(reverse('FacultyScheduleMeeting'))   
+
+
 def feedback_menu(request):
     admin_obj=CustomUser.objects.get(id=request.user.id)
     staff_obj=Staffs.objects.get(admin=admin_obj)
@@ -252,6 +316,7 @@ def feedback_menu(request):
         'feedbacks':prev_feedback_data
     }
     return render(request,'dashboard/staff_templates/staff_feedback_page.html',param)
+
 
 def feedback_save(request):
     if request.method != "POST":

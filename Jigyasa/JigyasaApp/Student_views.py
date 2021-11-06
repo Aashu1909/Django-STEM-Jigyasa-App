@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http.response import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render
 from django.urls.base import reverse
-from .models import Attendance, AttendanceReport, Courses, CustomUser, FeedBackStudent, Students, Subjects,LeaveReportStudent
+from .models import Attendance,ScheduleMeeting,AttendanceReport, Courses, CustomUser, FeedBackStudent, StudentResult, Students, Subjects,LeaveReportStudent
 
 def student_home(request):
     if str(request.user.user_type) =='3':
@@ -64,6 +64,19 @@ def edit_profile_save(request):
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("StudentEditProfile"))
 
+
+def join_meeting(request):
+    admin_obj=CustomUser.objects.get(id=request.user.id)
+    student_obj=Students.objects.get(admin=admin_obj)
+    course_obj=Courses.objects.get(id=student_obj.course_id.id)
+    subjects=Subjects.objects.filter(course_id=course_obj)
+    join_schedule_meetings=ScheduleMeeting.objects.filter(subject_id__in=subjects)
+    print(join_schedule_meetings)
+    param={
+        'join_schedule_meetings':join_schedule_meetings,
+    }
+    return render(request,'dashboard/student_templates/student_join_meeting.html',param)
+
 def view_attendance(request):
     user_obj=CustomUser.objects.get(id=request.user.id)
     student_obj=Students.objects.get(admin=user_obj)
@@ -97,7 +110,6 @@ def view_attendence_get(request):
             'attendance_reports':attendance_reports_obj
         }
         return render(request,'dashboard/student_templates/student_view_attendance_data.html',param)
-
 
 def apply_leave(request):
     admin_obj=CustomUser.objects.get(id=request.user.id)

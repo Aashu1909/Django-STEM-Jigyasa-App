@@ -36,6 +36,16 @@
             </p>
           </a>
         </li>
+        <!-- Schedule Meetings -->
+        {% url 'FacultyScheduleMeeting' as FacultyScheduleMeeting %}
+        <li class="nav-item">
+          <a href='{{FacultyScheduleMeeting}}' class="nav-link {% if request.path == FacultyScheduleMeeting %}active {% endif %}  ">
+            <i class="fas fa-home"></i>
+            <p>
+              Schedule Online Class
+            </p>
+          </a>
+        </li>
         <!-- Take Attendnace -->
         {% url 'FacultyTakeAttendance' as FacultyTakeAttendance %}
         <li class="nav-item">

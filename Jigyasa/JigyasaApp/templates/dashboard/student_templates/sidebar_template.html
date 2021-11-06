@@ -33,6 +33,16 @@
             </p>
           </a>
         </li>
+      
+        {% url 'StudentJoinMeeting' as StudentJoinMeeting %}
+        <li class="nav-item">
+          <a href='{{StudentJoinMeeting}}' class="nav-link {% if request.path == StudentJoinMeeting %}active {% endif %}  ">
+            <i class="fas fa-home"></i>
+            <p>
+              Join Meeting
+            </p>
+          </a>
+        </li>
         {% url 'StudentViewAttendance' as StudentViewAttendance %}
         {% url 'GetStudentAttendanceReport' as GetStudentAttendanceReport %}
         <li class="nav-item">

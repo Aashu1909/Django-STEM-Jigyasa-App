@@ -1,0 +1,97 @@
+{% extends 'dashboard/student_templates/base_template.html'%}
+{% load static %}
+
+{% block title %}
+Student Join Meeting
+{% endblock title%}
+
+{% block main_title %}
+Student Join Meeting Page
+{% endblock main_title%}
+{% block page_title %}
+Student Join Meeting
+{% endblock page_title%}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+
+    <div class="backend-message">
+      {% if messages %}
+      {% for message in messages  %}
+      {% if message.tags == 'success' %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!!</strong> {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+      {% if message.tags == 'error' %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!!!</strong> {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    </div>
+    <!-- Main column -->
+    <div class="row">
+      <div class="col-md-12">
+        {% if join_schedule_meetings.count > 0 %}
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"></h3>
+
+            <div class="card-tools">
+              <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead>
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Staff Name</th>
+                    <th>Meeting Topic</th>
+                    <th>Meeting Subject</th>
+                    <th>Date&Time</th>
+                    <th>Meeting url</th>
+                    <th>Meeting Password</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for meeting in join_schedule_meetings %}
+                <tr>
+                    <td> {{meeting.staff_id.id}} </td>
+                    <td>{{meeting.staff_id.admin.first_name}} {{meeting.staff_id.admin.last_name}}</td>
+                    <td>{{meeting.topic_name}}</td>
+                    <td>{{meeting.subject_id.subject_name}}</td>
+                    <td>{{meeting.date}} {{meeting.time}}</td>
+                    <td><a href="{{meeting.join_url}}" target="_blank">Join Meeting</a></td>
+                    <td>{{meeting.meeting_password}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        {% endif %}
+      </div> <!-- Form end -->
+    </div><!-- /.card -->
+  </div> <!-- col-md-12 -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+{% endblock main_content %}

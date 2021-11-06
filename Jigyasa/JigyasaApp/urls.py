@@ -79,6 +79,8 @@ urlpatterns = [
      path('faculty_updated_attendance/', Staff_views.updated_attendance, name="FacultyUpdatedAttendance"),
      path('faculty_apply_leave/', Staff_views.apply_leave, name="FacultyApplyLeave"),
      path('faculty_apply_leave_save/', Staff_views.apply_leave_save, name="FacultyApplyLeaveSave"),
+     path('faculty_schedule_meeting/', Staff_views.schedule_meeting, name="FacultyScheduleMeeting"),
+     path('faculty_schedule_meeting_save/', Staff_views.schedule_meeting_save, name="FacultyScheduleMeetingSave"),
      path('faculty_feedback_menu/', Staff_views.feedback_menu, name="FacultyFeedbackMenu"),
      path('faculty_feedback_save/', Staff_views.feedback_save, name="FacultyFeedbackSave"),
      path('faculty_edit_profile/',Staff_views.edit_profile,name='StaffEditProfile'),
@@ -97,5 +99,6 @@ urlpatterns = [
      path('student_feedback_save/', Student_views.feedback_save, name="StudentFeedbackSave"),
      path('student_edit_profile/',Student_views.edit_profile,name='StudentEditProfile'),
      path('student_edit_profile_save/',Student_views.edit_profile_save,name='StudentEditProfileSave'),
+     path('student_join_meeting/',Student_views.join_meeting,name='StudentJoinMeeting'),
           
 ]
