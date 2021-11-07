@@ -40,9 +40,32 @@
         {% url 'FacultyScheduleMeeting' as FacultyScheduleMeeting %}
         <li class="nav-item">
           <a href='{{FacultyScheduleMeeting}}' class="nav-link {% if request.path == FacultyScheduleMeeting %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+            <i class="far fa-calendar"></i>
+            &ensp;
             <p>
               Schedule Online Class
+            </p>
+          </a>
+        </li>
+        <!-- Share Notes -->
+        {% url 'FacultyShareNotes' as FacultyShareNotes %}
+        <li class="nav-item">
+          <a href='{{FacultyShareNotes}}' class="nav-link {% if request.path == FacultyShareNotes %}active {% endif %}  ">
+            <i class="fas fa-file-upload"></i>
+            &ensp;
+            <p>
+              Share Class Notes
+            </p>
+          </a>
+        </li>
+        <!-- todo LIst -->
+        {% url 'FacultyTodoList' as FacultyTodoList %}
+        <li class="nav-item">
+          <a href='{{FacultyTodoList}}' class="nav-link {% if request.path == FacultyTodoList %}active {% endif %}  ">
+            <i class="fas fa-list"></i>
+            &ensp;
+            <p>
+              Todo List
             </p>
           </a>
         </li>
@@ -51,7 +74,8 @@
         <li class="nav-item">
           <a href='{{FacultyTakeAttendance}}'
             class="nav-link {% if request.path == FacultyTakeAttendance %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-clipboard-check"></i>
+            &ensp;
             <p>
               Take Attendance
             </p>
@@ -62,7 +86,8 @@
         <li class="nav-item">
           <a href='{{FacultyViewUpdateAttendance}}'
             class="nav-link {% if request.path == FacultyViewUpdateAttendance %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-edit"></i>
+            &ensp;
             <p>
               View/Update Attendance
             </p>
@@ -73,7 +98,8 @@
         <li class="nav-item">
           <a href='{{FacultyApplyLeave}}'
             class="nav-link {% if request.path == FacultyApplyLeave %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-envelope-open-text"></i>
+            &ensp;
             <p>
               Apply Leave
             </p>
@@ -84,7 +110,8 @@
         <li class="nav-item">
           <a href='{{FacultyFeedbackMenu}}'
             class="nav-link {% if request.path == FacultyFeedbackMenu %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+            <i class="far fa-comment-alt"></i>
+            &ensp;
             <p>
               Staff Feedback
             </p>

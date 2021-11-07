@@ -28,38 +28,68 @@
         <li class="nav-item">
           <a href='{{StudentHome}}' class="nav-link {% if request.path == StudentHome %}active {% endif %}  ">
             <i class="fas fa-home"></i>
+            &ensp;
             <p>
               Home
             </p>
           </a>
         </li>
-      
+
         {% url 'StudentJoinMeeting' as StudentJoinMeeting %}
         <li class="nav-item">
-          <a href='{{StudentJoinMeeting}}' class="nav-link {% if request.path == StudentJoinMeeting %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+          <a href='{{StudentJoinMeeting}}'
+            class="nav-link {% if request.path == StudentJoinMeeting %}active {% endif %}  ">
+            <i class="far fa-calendar"></i>
+            &ensp;
             <p>
               Join Meeting
             </p>
           </a>
         </li>
+
+        {% url 'StudentDownloadNotes' as StudentDownloadNotes %}
+        <li class="nav-item">
+          <a href='{{StudentDownloadNotes}}'
+            class="nav-link {% if request.path == StudentDownloadNotes %}active {% endif %}  ">
+            <i class="fas fa-file-download"></i>
+            &ensp;
+            <p>
+              Download Notes
+            </p>
+          </a>
+        </li>
+
+        {% url 'StudentTodoList' as StudentTodoList %}
+        <li class="nav-item">
+          <a href='{{StudentTodoList}}' class="nav-link {% if request.path == StudentTodoList %}active {% endif %}  ">
+            <i class="fas fa-list"></i>
+            &ensp;
+            <p>
+              Todo List
+            </p>
+          </a>
+        </li>
+
         {% url 'StudentViewAttendance' as StudentViewAttendance %}
         {% url 'GetStudentAttendanceReport' as GetStudentAttendanceReport %}
         <li class="nav-item">
           <a href='{{StudentViewAttendance}}'
             class="nav-link {% if request.path == StudentViewAttendance %}active {% endif %} {% if request.path == GetStudentAttendanceReport %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+            <i class="far fa-clipboard"></i>
+            &ensp;
             <p>
               Student Attendance
-              
+
             </p>
           </a>
         </li>
+
         {% url 'StudentApplyLeave' as StudentApplyLeave %}
         <li class="nav-item">
           <a href='{{StudentApplyLeave}}'
             class="nav-link {% if request.path == StudentApplyLeave %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-envelope-open-text"></i>
+            &ensp;
             <p>
               Apply Leave
             </p>
@@ -69,7 +99,8 @@
         <li class="nav-item">
           <a href='{{StudentFeedbackMenu}}'
             class="nav-link {% if request.path == StudentFeedbackMenu %}active {% endif %}  ">
-            <i class="fas fa-home"></i>
+            <i class="far fa-comment-alt"></i>
+            &ensp;
             <p>
               Feedback
             </p>

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http.response import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render
 from django.urls.base import reverse
-from .models import Attendance,ScheduleMeeting,AttendanceReport, Courses, CustomUser, FeedBackStudent, StudentResult, Students, Subjects,LeaveReportStudent
+from .models import Attendance,ScheduleMeeting,AttendanceReport, Courses, CustomUser, FeedBackStudent, ShareNotes, StudentResult, Students, Subjects,LeaveReportStudent
 
 def student_home(request):
     if str(request.user.user_type) =='3':
@@ -38,12 +38,14 @@ def student_home(request):
     else: 
         return HttpResponse(reverse('ShowLogin'))
 
+
 def edit_profile(request):
     user=CustomUser.objects.get(id=request.user.id)
     param={
         'user':user
     }
     return render(request,'dashboard/admin/edit_profile.html',param)
+
 
 def edit_profile_save(request):
     if request.method!="POST":
@@ -71,11 +73,27 @@ def join_meeting(request):
     course_obj=Courses.objects.get(id=student_obj.course_id.id)
     subjects=Subjects.objects.filter(course_id=course_obj)
     join_schedule_meetings=ScheduleMeeting.objects.filter(subject_id__in=subjects)
-    print(join_schedule_meetings)
     param={
         'join_schedule_meetings':join_schedule_meetings,
     }
     return render(request,'dashboard/student_templates/student_join_meeting.html',param)
+
+
+def download_notes(request):
+    admin_obj=CustomUser.objects.get(id=request.user.id)
+    student_obj=Students.objects.get(admin=admin_obj)
+    course_obj=Courses.objects.get(id=student_obj.course_id.id)
+    subjects=Subjects.objects.filter(course_id=course_obj)
+    shared_notes=ShareNotes.objects.filter(subject_id__in=subjects)
+    param={
+        'shared_notes':shared_notes,
+    }
+    return render(request,'dashboard/student_templates/student_download_notes.html',param)
+
+
+def todo_list(request):
+    return render(request,'dashboard/student_templates/student_todo_list.html')
+
 
 def view_attendance(request):
     user_obj=CustomUser.objects.get(id=request.user.id)
@@ -87,7 +105,8 @@ def view_attendance(request):
         'subjects':subject_obj
     }
     return render(request, 'dashboard/student_templates/student_view_attendance.html',param)
-    
+
+
 def view_attendence_get(request):
     if request.method!="POST":
         return HttpResponse("Method not allowed")
@@ -111,6 +130,7 @@ def view_attendence_get(request):
         }
         return render(request,'dashboard/student_templates/student_view_attendance_data.html',param)
 
+
 def apply_leave(request):
     admin_obj=CustomUser.objects.get(id=request.user.id)
     student_obj=Students.objects.get(admin=admin_obj)
@@ -119,6 +139,7 @@ def apply_leave(request):
         'prev_leave_data':prev_leave_data
     }
     return render(request,'dashboard/student_templates/student_apply_leave.html',param)
+
 
 def apply_leave_save(request):
     if request.method != "POST":
@@ -137,6 +158,7 @@ def apply_leave_save(request):
             messages.error(request, e)
             return HttpResponseRedirect(reverse('StudentApplyLeave'))
 
+
 def feedback_menu(request):
     admin_obj=CustomUser.objects.get(id=request.user.id)
     student_obj=Students.objects.get(admin=admin_obj)
@@ -145,6 +167,7 @@ def feedback_menu(request):
         'feedbacks':prev_feedback_data
     }
     return render(request,'dashboard/student_templates/student_feedback_page.html',param)
+
 
 def feedback_save(request):
     if request.method != "POST":

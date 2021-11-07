@@ -172,13 +172,14 @@ class ScheduleMeeting(models.Model):
     objects = models.Manager()
 
 
-# class ShareNotes(models.Model):
-#     id=models.AutoField(primary_key=True)
-#     staff_id=models.ForeignKey(Staffs,on_delete=models.CASCADE)
-#     subject_id=models.ForeignKey(Subjects,on_delete=models.CASCADE)
-#     notes=models.FileField()
-#     created_at=models.DateField(auto_now_add=True)
-#     update_at=models.DateField(auto_now_add=True)
+class ShareNotes(models.Model):
+    id=models.AutoField(primary_key=True)
+    staff_id=models.ForeignKey(Staffs,on_delete=models.CASCADE)
+    subject_id=models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    topic=models.CharField(max_length=100,default='')
+    notes=models.FileField(upload_to='media/Notes')
+    created_at=models.DateField(auto_now_add=True)
+    update_at=models.DateField(auto_now_add=True)
 
 
 @receiver(post_save, sender=CustomUser)

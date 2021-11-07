@@ -85,7 +85,9 @@ urlpatterns = [
      path('faculty_feedback_save/', Staff_views.feedback_save, name="FacultyFeedbackSave"),
      path('faculty_edit_profile/',Staff_views.edit_profile,name='StaffEditProfile'),
      path('faculty_edit_profile_save/',Staff_views.edit_profile_save,name='StaffEditProfileSave'),
-
+     path('faculty_share_notes/', Staff_views.share_notes, name="FacultyShareNotes"),
+     path('faculty_share_notes_save/', Staff_views.share_notes_save, name="FacultyShareNotesSave"),
+     path('faculty_todo_list/',Staff_views.todo_list,name='FacultyTodoList'),
      # path('student_login/',views.student_login,name='StudentLogin'),
      # path('student_user_logout/',views.student_user_logout,name='StudentLogout'),
      # path('student_login_page/',views.student_login_page, name='StudentLoginPage'),
@@ -100,5 +102,6 @@ urlpatterns = [
      path('student_edit_profile/',Student_views.edit_profile,name='StudentEditProfile'),
      path('student_edit_profile_save/',Student_views.edit_profile_save,name='StudentEditProfileSave'),
      path('student_join_meeting/',Student_views.join_meeting,name='StudentJoinMeeting'),
-          
+     path('student_download_notes/',Student_views.download_notes,name='StudentDownloadNotes'),
+     path('student_todo_list/',Student_views.todo_list,name='StudentTodoList'),
 ]

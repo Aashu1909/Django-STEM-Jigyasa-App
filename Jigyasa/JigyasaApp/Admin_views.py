@@ -214,9 +214,6 @@ def add_student_save(request):
             session_id = form.cleaned_data['session_year_id']
             sex = form.cleaned_data['sex']
             cnf_password = form.cleaned_data['cnf_password']
-            print(sex)
-            print(password)
-            print(cnf_password)
             profile_pic = request.FILES['profile_pic']
             fs = FileSystemStorage()
             filename = fs.save(profile_pic.name, profile_pic)

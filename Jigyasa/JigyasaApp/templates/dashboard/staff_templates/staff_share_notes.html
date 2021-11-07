@@ -2,19 +2,20 @@
 {% load static %}
 
 {% block title %}
-Staff Feedback
+Staff Share Notes
 {% endblock title%}
 
 {% block main_title %}
-Staff Feedback Page
+Staff Share Notes
 {% endblock main_title%}
 {% block page_title %}
-Staff Feedback
+Staff Share Notes
 {% endblock page_title%}
 
 {% block main_content %}
 <section class="content">
     <div class="container-fluid">
+
         <div class="backend-message">
             {% if messages %}
             {% for message in messages  %}
@@ -36,41 +37,37 @@ Staff Feedback
             {% endif %}
             {% endfor %}
             {% endif %}
-
         </div>
         <!-- Main column -->
         <div class="row">
             <div class="col-md-12">
-                <!-- card Header -->
-
-                {% if feedbacks.count > 0 %}
+                {% if prev_shared_notes.count > 0 %}
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Past Feedback Records:</h3>
+                        <h3 class="card-title">Previous Shared Notes</h3>
 
-
+                        
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>STaff ID</th>
-                                    <th>Username</th>
+                                    <th>Staff ID</th>
                                     <th>Staff Name</th>
-                                    <th>Feedback Message</th>
-                                    <th>Response</th>
+                                    <th>Subject</th>
+                                    <th>Topic</th>
+                                    <th>View Notes</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for feedback in feedbacks %}
+                                {% for notes in prev_shared_notes %}
                                 <tr>
-                                    <td> {{feedback.staff_id.id}} </td>
-                                    <td> {{feedback.staff_id.admin.username}} </td>
-                                    <td>{{feedback.staff_id.admin.first_name}} {{feedback.staff_id.admin.last_name}}
-                                    </td>
-                                    <td>{{feedback.feedback}}</td>
-                                    <td>{{feedback.feedback_reply}}</td>
+                                    <td> {{notes.staff_id.id}} </td>
+                                    <td>{{notes.staff_id.admin.first_name}} {{notes.staff_id.admin.last_name}}</td>
+                                    <td>{{notes.subject_id.subject_name}}</td>
+                                    <td>{{notes.topic}}</td>
+                                    <td><a href="{{notes.notes}}" target="_blank">View</a></td>
 
                                 </tr>
                                 {% endfor %}
@@ -81,34 +78,46 @@ Staff Feedback
                 </div>
                 {% endif %}
 
-
+                <!-- card Header -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Feedback Menu</h3>
+                        <h3 class="card-title">Share Notes</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{% url 'FacultyFeedbackSave' %}" method="post">
+                    <form action="{% url 'FacultyShareNotesSave' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="card-body">
+                            <div class="form-group">
+                                <label>Select Subject:</label>
+                                <select class="form-control" name="subject" id="subject">
+                                    {% for subject in subjects %}
+                                    <option value="{{subject.id}}">{{subject.subject_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
 
                             <div class="form-group">
-                                <label>Feedback Message:</label>
-                                <textarea rows="8" name="feedback_message" class="form-control" id="feedback_message">
-                              </textarea>
+                                <label>Topic</label>
+                                <input type="text" class="form-control" name="topic" id="topic">
                             </div>
-
+                            
+                            <div class="form-group">
+                                <label>Upload File</label>
+                                <input type="file" class="form-control" name="notes" id="notes">
+                            </div>
+                            
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-block" id="save_feedback">Submit
-                                    Your Feedback</button>
+                                <button type="submit" class="btn btn-primary btn-block" id="schedule_meeeting">Schedule
+                                    Meeting</button>
                             </div>
+                        </div>
                     </form>
                     <!-- Form end -->
                 </div><!-- /.card -->
-
-            </div><!-- /.card -->
-        </div> <!-- col-md-12 -->
-    </div>
+            </div> <!-- Form end -->
+        </div><!-- /.card -->
+    </div> <!-- col-md-12 -->
     <!-- /.container-fluid -->
 </section>
 {% endblock main_content %}

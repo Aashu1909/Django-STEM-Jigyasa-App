@@ -1,20 +1,21 @@
-{% extends 'dashboard/staff_templates/base_template.html'%}
+{% extends 'dashboard/student_templates/base_template.html'%}
 {% load static %}
 
 {% block title %}
-Staff Feedback
+Student Download Notes
 {% endblock title%}
 
 {% block main_title %}
-Staff Feedback Page
+Student Download Notes
 {% endblock main_title%}
 {% block page_title %}
-Staff Feedback
+Student Download Notes
 {% endblock page_title%}
 
 {% block main_content %}
 <section class="content">
     <div class="container-fluid">
+
         <div class="backend-message">
             {% if messages %}
             {% for message in messages  %}
@@ -36,17 +37,14 @@ Staff Feedback
             {% endif %}
             {% endfor %}
             {% endif %}
-
         </div>
         <!-- Main column -->
         <div class="row">
             <div class="col-md-12">
-                <!-- card Header -->
-
-                {% if feedbacks.count > 0 %}
+                {% if shared_notes.count > 0 %}
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Past Feedback Records:</h3>
+                        <h3 class="card-title">Previous Shared Notes</h3>
 
 
                     </div>
@@ -55,23 +53,21 @@ Staff Feedback
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>STaff ID</th>
-                                    <th>Username</th>
+                                    <th>Staff ID</th>
                                     <th>Staff Name</th>
-                                    <th>Feedback Message</th>
-                                    <th>Response</th>
+                                    <th>Subject</th>
+                                    <th>Topic</th>
+                                    <th><i class="fa fa-download" aria-hidden="true"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for feedback in feedbacks %}
+                                {% for notes in shared_notes %}
                                 <tr>
-                                    <td> {{feedback.staff_id.id}} </td>
-                                    <td> {{feedback.staff_id.admin.username}} </td>
-                                    <td>{{feedback.staff_id.admin.first_name}} {{feedback.staff_id.admin.last_name}}
-                                    </td>
-                                    <td>{{feedback.feedback}}</td>
-                                    <td>{{feedback.feedback_reply}}</td>
-
+                                    <td> {{notes.staff_id.id}} </td>
+                                    <td>{{notes.staff_id.admin.first_name}} {{notes.staff_id.admin.last_name}}</td>
+                                    <td>{{notes.subject_id.subject_name}}</td>
+                                    <td>{{notes.topic}}</td>
+                                    <td><a href="{{notes.notes}}" target="_blank">Click Here</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -80,35 +76,11 @@ Staff Feedback
                     <!-- /.card-body -->
                 </div>
                 {% endif %}
-
-
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Feedback Menu</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form action="{% url 'FacultyFeedbackSave' %}" method="post">
-                        {% csrf_token %}
-                        <div class="card-body">
-
-                            <div class="form-group">
-                                <label>Feedback Message:</label>
-                                <textarea rows="8" name="feedback_message" class="form-control" id="feedback_message">
-                              </textarea>
-                            </div>
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-block" id="save_feedback">Submit
-                                    Your Feedback</button>
-                            </div>
-                    </form>
-                    <!-- Form end -->
-                </div><!-- /.card -->
-
+                <!-- Form end -->
             </div><!-- /.card -->
-        </div> <!-- col-md-12 -->
-    </div>
+        </div> <!-- Form end -->
+    </div><!-- /.card -->
+    </div> <!-- col-md-12 -->
     <!-- /.container-fluid -->
 </section>
 {% endblock main_content %}
