@@ -17,7 +17,9 @@
   6.You are good to go.
 
   7.Create a database and change the value in setiing.py under project name
-
+  
+  8.Change the branch to MASTER to see the source code.
+  
   ![t1](https://user-images.githubusercontent.com/69004890/180488501-2e8391db-eac4-41c8-87b0-e088036eb31b.png)
 
   ![t2](https://user-images.githubusercontent.com/69004890/180488529-979c4402-774b-43ca-9138-cfb94c607d05.png)
