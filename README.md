@@ -1,4 +1,4 @@
-# Django-STEM-App
+# Django-STEM_Jigyasa-App
 Make sure you start the virtual environment(env)
 1. Make a virtual env and activate it writing this command in your cmd ./env/Scripts/activate
 2.pip install django
