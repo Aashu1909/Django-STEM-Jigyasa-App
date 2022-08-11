@@ -1,0 +1,12 @@
+1. Make sure you have succesfully created a project in django
+2. Create a database using Mysql command line interface
+3.Create database database_name
+4.Create a user so that django can access the database
+5.Using the command "create user 'user_name'@'localhost' identified by 'user_password'
+6.Make changes in settings.py to connect the database
+7.Make sure that your system has mysqlclient Pyjwt,request library of python installed
+8.Then write the command make migration to migrate the changes made in models.py
+9.If models .py return NO CHANGES DETECTED Try this command 'python manage.py makemigrations App_name'.
+10 Create a Superuser using django create superuser command.
+11. And you are ready to go
+

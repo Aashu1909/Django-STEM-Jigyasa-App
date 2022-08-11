@@ -1,0 +1,241 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="{% url 'AdminHome' %}" class="brand-link">
+    <img src={% static 'dashboard/dist/img/AdminLTELogo.png' %} alt="AdminLTE Logo"
+      class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">STEM Admin Panel </span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src={% static 'dashboard/dist/img/user2-160x160.jpg' %} class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">{{user.username}} </a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        <!-- Home -->
+        <li class="nav-item">
+          <a href=" {% url 'AdminHome' %} " class="nav-link {% if request.path == AdminHome %}active {% endif %}">
+            <i class="fa fa-home"></i>
+            &ensp;
+            <p>
+              Home
+            </p>
+          </a>
+        </li>
+        <!-- Staff TreeView -->
+        <li class="nav-item has-treeview">
+          {% url 'AdminAddFaculty' as AdminAddFaculty %}
+          {% url 'AdminManageFaculty' as AdminManageFaculty %}
+          {% url 'AdminEditFaculty' staff_id=id as AdminEditFaculty %}
+          {% url 'AdminViewStaffLeavePage' as AdminViewStaffLeavePage %}
+          {% url 'AdminStaffFeedbackMessage' as AdminStaffFeedbackMessage %}
+          <a class="nav-link 
+            {% if request.path == AdminViewStaffLeavePage %}active {% endif %}
+            {% if request.path == AdminAddFaculty %}active {% endif %}
+            {% if request.path == AdminManageFaculty %}active{% endif %}
+            {% if request.path == AdminEditFaculty %}active {% endif %}>
+            {% if request.path == AdminStaffFeedbackMessage %}active {% endif %}">
+            <i class="fas fa-chalkboard-teacher"></i>
+            &#160;
+            <p>
+              Staff Members
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <!-- Add Staff -->
+            <li class="nav-item">
+              <a href={{AdminAddFaculty}} class="nav-link {% if request.path == AdminAddFaculty %}active {% endif %}  ">
+                <i class="fas mr-2 fa-user-plus"></i>
+                <p>
+                  Add Staff
+                </p>
+              </a>
+            </li>
+            <!-- Manage Staff -->
+            <li class="nav-item">
+              <a href="{{AdminManageFaculty}}"
+                class="nav-link  {% if request.path == AdminManageFaculty %}active {% endif %} {% if request.path == AdminEditFaculty %}active {% endif %}">
+                <i class="fas mr-2 fa-user-circle"></i>
+                <p>
+                  Manage Staff
+                </p>
+              </a>
+            </li>
+            <!-- Staff Leave -->
+            <li class="nav-item">
+              <a href="{{AdminViewStaffLeavePage}}"
+                class="nav-link {% if request.path == AdminViewStaffLeavePage %}active {% endif %}">
+                <i class="fas mr-2 fa-book-reader"></i>
+                <p>
+                  Staff Leave Status
+                </p>
+              </a>
+            </li>
+            <!-- Staff Feedback -->
+
+            <li class="nav-item">
+              <a href="{{AdminStaffFeedbackMessage}}"
+                class="nav-link {% if request.path == AdminStaffFeedbackMessage %}active {% endif %}">
+                <i class="fas mr-2 fa-book-reader"></i>
+                <p>
+                  Staff Feedback Reply
+                </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+          {% url 'AdminEditStudent' student_id=id as AdminEditStudent %}
+          {% url 'AdminManageStudent' as AdminManageStudent %}
+          {% url 'AdminStudentFeedbackMessage' as AdminStudentFeedbackMessage %}
+          {% url 'AdminAddStudent' as AdminAddStudent %}
+          {% url 'AdminViewStudentLeavePage' as AdminViewStudentLeavePage %}
+          {% url 'AdminViewAttendnace' as AdminViewAttendnace %}
+          <a class="nav-link 
+            {% if request.path == AdminEditStudent %}active {% endif %}
+            {% if request.path == AdminManageStudent %}active {% endif %}
+            {% if request.path == AdminStudentFeedbackMessage %}active{% endif %}
+            {% if request.path == AdminAddStudent %}active {% endif %}
+            {% if request.path == AdminViewAttendnace %}active {% endif %}
+            {% if request.path == AdminViewStudentLeavePage %}active {% endif %}">
+            <i class="fas fa-user-graduate"></i>
+            &ensp;
+            <p>
+              Students View
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <!-- Add Student -->
+            <li class="nav-item">
+              <a href={{AdminAddStudent}} class="nav-link {% if request.path == AdminAddStudent %}active {% endif %}">
+                <i class="fas mr-2 fa-user-plus"></i>
+                <p>
+                  Add Student
+                </p>
+              </a>
+            </li>
+            <!-- Manage Student -->
+            <li class="nav-item">
+              <a href=" {{AdminManageStudent}} "
+                class="nav-link {% if request.path == AdminManageStudent %}active {% endif %}{% if request.path == AdminEditStudent %}active {% endif %}">
+                <i class="fas mr-2 fa-user-graduate"></i>
+                <p>
+                  Manage Stduent
+                </p>
+              </a>
+            </li>
+            <!-- Student Leave -->
+            <li class="nav-item">
+              <a href="{{AdminViewStudentLeavePage}}"
+                class="nav-link {% if request.path == AdminViewStudentLeavePage %}active {% endif %}">
+                <i class="fas mr-2 fa-book-reader"></i>
+                <p>
+                  Student Leave Status
+                </p>
+              </a>
+            </li>
+            <!-- Student FeedBack -->
+            <li class="nav-item">
+              <a href="{{AdminStudentFeedbackMessage}}"
+                class="nav-link {% if request.path == AdminStudentFeedbackMessage %}active {% endif %}">
+                <i class="fas mr-2 fa-book-reader"></i>
+                <p>
+                  Student Feedback Reply
+                </p>
+              </a>
+            </li>
+            <!-- Student Attendance -->
+            <li class="nav-item">
+              <a href="{{AdminViewAttendnace}}"
+                class="nav-link {% if request.path == AdminViewAttendnace %}active {% endif %}">
+                <i class="fas mr-2 fa-user"></i>
+                <p>
+                  View Student Attendance
+                </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Course -->
+        {% url 'AdminAddCourse' as AdminAddCourse %}
+        <li class="nav-item">
+          <a href=" {{AdminAddCourse}} " class="nav-link {% if request.path == AdminAddCourse %}active {% endif %}">
+            <i class="fas fa-university"></i>
+            &ensp;
+            <p>
+              Add Course
+            </p>
+          </a>
+        </li>
+        <!-- manage course -->
+        {% url 'AdminManageCourse' as AdminManageCourse %}
+        {% url 'AdminEditCourse' course_id=id as AdminEditCourse %}
+        <li class="nav-item">
+          <a href="{% url 'AdminManageCourse' %}"
+            class="nav-link {% if request.path == AdminManageCourse %}active {% endif %}  {% if request.path == AdminEditCourse %}active {% endif %}">
+            <i class="fas fa-clipboard-list"></i>
+            &ensp;
+            <p>
+              Manage Course
+            </p>
+          </a>
+        </li>
+        {% url 'AdminAddSubject' as AdminAddSubject %}
+        <li class="nav-item">
+          <a href=" {{AdminAddSubject}} " class="nav-link {% if request.path == AdminAddSubject %}active {% endif %}">
+            <i class="fas fa-book"></i>
+            &ensp;
+            <p>
+              Add Subject
+            </p>
+          </a>
+        </li>
+        {% url 'AdminManageSubject' as AdminManageSubject %}
+        {% url 'AdminEditSubject' subject_id=id as AdminEditSubject %}
+        <li class="nav-item">
+          <a href="{{AdminManageSubject}}"
+            class="nav-link {% if request.path == AdminManageSubject %}active {% endif %} {% if request.path == AdminEditSubject %}active {% endif %}">
+            <i class="fas mr-2 fa-book-reader"></i>
+
+            <p>
+              Manage Subject
+            </p>
+          </a>
+        </li>
+
+        {% url 'AdminManageSession' as AdminManageSession %}
+        <li class="nav-item">
+          <a href="{{AdminManageSession}}"
+            class="nav-link {% if request.path == AdminManageSession %}active {% endif %}">
+            <i class="fas fa-calendar-alt"></i>
+            &ensp;
+            <p>
+              Manage Session Year
+
+            </p>
+          </a>
+        </li>
+
+
+
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
