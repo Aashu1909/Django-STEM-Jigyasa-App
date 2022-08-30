@@ -252,7 +252,7 @@ def apply_leave_save(request):
 def schedule_meeting(request):
     admin_obj=CustomUser.objects.get(id=request.user.id)
     staff_obj = Staffs.objects.get(admin=admin_obj)
-    subjects=Subjects.objects.filter(staff_id=admin_obj)
+    subjects=Subjects.objects.filter(staff_id=staff_obj.id)
     prev_schedule_meetings=ScheduleMeeting.objects.filter(staff_id=staff_obj)
     param={
         'prev_schedule_meetings':prev_schedule_meetings,
@@ -341,9 +341,11 @@ def feedback_save(request):
 
 
 def share_notes(request):
+    print(request.user.id)
     admin_obj=CustomUser.objects.get(id=request.user.id)
     staff_obj = Staffs.objects.get(admin=admin_obj)
-    subjects=Subjects.objects.filter(staff_id=admin_obj)
+    print(staff_obj.id)
+    subjects=Subjects.objects.filter(staff_id=staff_obj.id)
     prev_shared_notes=ShareNotes.objects.filter(staff_id=staff_obj)
     param={
         'prev_shared_notes':prev_shared_notes,

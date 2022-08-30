@@ -342,10 +342,10 @@ def add_course_save(request):
             course_model = Courses(course_name=course)
             course_model.save()
             messages.success(request, 'Course Added Successfully')
-            return HttpResponseRedirect(reverse('AdminAddCourse)'))
+            return HttpResponseRedirect(reverse('AdminAddCourse'))
         except Exception as e:
             messages.error(request, e)
-            return HttpResponseRedirect(reverse('AdminAddCourse)'))
+            return HttpResponseRedirect(reverse('AdminAddCourse'))
 
 
 def manage_course(request):
@@ -393,12 +393,13 @@ def add_subject_save(request):
         course_id = request.POST.get("course")
         course = Courses.objects.get(id=course_id)
         staff_id = request.POST.get("staff")
-        staff = CustomUser.objects.get(id=staff_id)
-
+        custom_user_object = CustomUser.objects.get(id=staff_id)
+        staff_object = Staffs.objects.get(admin=custom_user_object)
+        print(staff_object.id,"Admin",staff_id,custom_user_object.id)
         try:
-            subject = Subjects(subject_name=subject_name,
-                               course_id=course, staff_id=staff)
-            subject.save()
+            subject_model = Subjects(subject_name=subject_name,
+                               course_id=course, staff_id=staff_object)
+            subject_model.save()
             messages.success(request, "Successfully Added Subject")
             return HttpResponseRedirect(reverse('AdminAddSubject'))
         except Exception as e:

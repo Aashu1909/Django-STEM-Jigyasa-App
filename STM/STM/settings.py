@@ -48,6 +48,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Registering the Custom Login middleware that we have wrote
+    'StemApp.Login_MiddleWare.LoginCheckMiddleWare'
+
 ]
 
 ROOT_URLCONF = 'STM.urls'
@@ -137,7 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL="StemApp.CustomUser"
 # REGISTERING THE CUSTOM AUTHENTICATION MODEL
 # THAT IS EMAILBACKEND  
-# AUTHENTICTAION_BACKENDS=['StemApp.custom_authorisation_backend.EmailBackEnd']
+AUTHENTICTAION_BACKENDS=['StemApp.custom_authorisation_backend.EmailBackEnd']
 
 # Setting up Path for storing sent Email.
 EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend'
